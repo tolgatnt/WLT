@@ -1589,6 +1589,62 @@ html.light-theme .home-kicker {
 }
 </style>
 
+
+<style id="service-checkin-and-light-menu-fixes">
+html.light-theme nav,
+html.light-theme nav a,
+html.light-theme .nav,
+html.light-theme .nav a,
+html.light-theme header nav a {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+html.light-theme nav a:hover,
+html.light-theme .nav a:hover,
+html.light-theme header nav a:hover {
+  color: #1683ff !important;
+  -webkit-text-fill-color: #1683ff !important;
+}
+</style>
+
+
+<style id="light-menu-white-blue-fix">
+html.light-theme nav a,
+html.light-theme .nav a,
+html.light-theme header nav a {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+html.light-theme nav a:hover,
+html.light-theme .nav a:hover,
+html.light-theme header nav a:hover {
+  color: #8fd3ff !important;
+  -webkit-text-fill-color: #8fd3ff !important;
+}
+</style>
+
+
+
+
+
+
+
+<style id="service-checkin-v15-layout">
+.book-shell .card{width:min(100%,760px);margin:0 auto;box-sizing:border-box;}
+.book-form{width:100%;box-sizing:border-box;}
+.book-step{width:100%;box-sizing:border-box;}
+.book-step:not(.active){display:none!important;}
+.issue-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;width:100%!important;box-sizing:border-box!important;}
+.issue-bubble{width:100%!important;min-width:0!important;box-sizing:border-box!important;margin:0!important;}
+.quick-pills{display:flex!important;flex-wrap:wrap!important;gap:10px!important;margin-top:14px!important;}
+.service-checkin-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%;box-sizing:border-box;}
+.service-checkin-footer{margin-top:18px;padding-top:18px;border-top:1px solid rgba(127,183,255,.25);width:100%;box-sizing:border-box;}
+.service-details-field{width:100%;box-sizing:border-box;margin:0 0 14px!important;}
+.service-details-field textarea{width:100%;min-height:88px;box-sizing:border-box;resize:vertical;}
+.book-nav{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;width:100%!important;margin:0!important;box-sizing:border-box!important;}
+.book-nav .btn{width:100%!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;}
+@media(max-width:640px){.issue-grid,.service-checkin-fields{grid-template-columns:1fr!important}.book-nav{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
 </head>
 
 
@@ -1668,149 +1724,74 @@ html.light-theme .home-kicker {
       <div class="book-shell reveal">
         <article class="card">
           <form class="book-form" id="bookingForm">
-            <div class="book-step active" data-step="1">
-              <div class="step-label">
-                <strong>What kind of help do you need?</strong><span>Step 1 of 3</span>
-              </div>
-              <div class="issue-grid" id="issueChoices">
-                <button type="button" class="issue-bubble" data-issue="Computer / Laptop">
-                  <span class="bubble-icon">💻</span><strong>Computer / Laptop</strong>
-                  <small>Slow, broken, won't start, overheating</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Website">
-                  <span class="bubble-icon">🌐</span><strong>Website</strong>
-                  <small>Need a new site, changes or troubleshooting</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Software">
-                  <span class="bubble-icon">⚙</span><strong>Software</strong>
-                  <small>Install, update, error or configuration issue</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Internet / Wi-Fi">
-                  <span class="bubble-icon">📶</span><strong>Internet / Wi-Fi</strong>
-                  <small>Slow, disconnected or difficult to connect</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Printer / Device">
-                  <span class="bubble-icon">🖨</span><strong>Printer / Device</strong>
-                  <small>Can't print, connect or recognize a device</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Consultation">
-                  <span class="bubble-icon">💬</span><strong>Consultation</strong>
-                  <small>Talk through a technology need or project</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Training">
-                  <span class="bubble-icon">🎓</span><strong>Training</strong>
-                  <small>Learn how to use your technology with confidence</small>
-                </button>
-                <button type="button" class="issue-bubble" data-issue="Other technology">
-                  <span class="bubble-icon">🧩</span><strong>Something else</strong>
-                  <small>I'm not sure what category it falls into</small>
-                </button>
-              </div>
-            </div>
 
-            <div class="book-step" data-step="2">
-              <div class="step-label">
-                <strong>What are you experiencing?</strong><span>Step 2 of 3</span>
-              </div>
-              <div class="issue-grid" id="symptomChoices">
-                <button type="button" class="issue-bubble" data-symptom="It is slow">
-                  <span class="bubble-icon">🐢</span><strong>It's really slow</strong><small>Everything takes longer than it should</small>
-                </button>
-                <button type="button" class="issue-bubble" data-symptom="It won't turn on">
-                  <span class="bubble-icon">🔌</span><strong>It won't turn on</strong><small>No power, startup or boot issue</small>
-                </button>
-                <button type="button" class="issue-bubble" data-symptom="I keep getting errors">
-                  <span class="bubble-icon">⚠</span><strong>I keep getting errors</strong><small>Messages, crashes or unexpected behavior</small>
-                </button>
-                <button type="button" class="issue-bubble" data-symptom="It won't connect">
-                  <span class="bubble-icon">📡</span><strong>It won't connect</strong><small>Internet, Wi-Fi, Bluetooth or device connection</small>
-                </button>
-                <button type="button" class="issue-bubble" data-symptom="I need help setting it up">
-                  <span class="bubble-icon">🛠</span><strong>I need help setting it up</strong><small>New device, software or account setup</small>
-                </button>
-                <button type="button" class="issue-bubble" data-symptom="I need something built">
-                  <span class="bubble-icon">✨</span><strong>I need something built</strong><small>Website, system or digital project</small>
-                </button>
-              </div>
-              <div class="quick-pills">
-                <button type="button" class="quick-pill" data-extra="It started recently">Started recently</button>
-                <button type="button" class="quick-pill" data-extra="It happens randomly">Happens randomly</button>
-                <button type="button" class="quick-pill" data-extra="It happens every time">Happens every time</button>
-                <button type="button" class="quick-pill" data-extra="I have already tried restarting it">Already tried restarting</button>
-              </div>
-            </div>
+  <div class="book-step active" data-step="1">
+    <div class="step-label">
+      <strong>What kind of help do you need?</strong><span>Step 1 of 3</span>
+    </div>
+    <div class="issue-grid" id="issueChoices">
+      <button type="button" class="issue-bubble" data-issue="Computer / Laptop"><span class="bubble-icon">💻</span><strong>Computer / Laptop</strong><small>Slow, broken, won't start, overheating</small></button>
+      <button type="button" class="issue-bubble" data-issue="Website"><span class="bubble-icon">🌐</span><strong>Website</strong><small>Need a new site, changes or troubleshooting</small></button>
+      <button type="button" class="issue-bubble" data-issue="Software"><span class="bubble-icon">⚙</span><strong>Software</strong><small>Install, update, error or configuration issue</small></button>
+      <button type="button" class="issue-bubble" data-issue="Internet / Wi-Fi"><span class="bubble-icon">📶</span><strong>Internet / Wi-Fi</strong><small>Slow, disconnected or difficult to connect</small></button>
+      <button type="button" class="issue-bubble" data-issue="Printer / Device"><span class="bubble-icon">🖨</span><strong>Printer / Device</strong><small>Can't print, connect or recognize a device</small></button>
+      <button type="button" class="issue-bubble" data-issue="Consultation"><span class="bubble-icon">💬</span><strong>Consultation</strong><small>Talk through a technology need or project</small></button>
+      <button type="button" class="issue-bubble" data-issue="Training"><span class="bubble-icon">🎓</span><strong>Training</strong><small>Learn how to use your technology with confidence</small></button>
+      <button type="button" class="issue-bubble" data-issue="Other technology"><span class="bubble-icon">🧩</span><strong>Something else</strong><small>I'm not sure what category it falls into</small></button>
+    </div>
+  </div>
 
-            <div class="book-step" data-step="3">
-              <div class="step-label">
-                <strong>How urgent is this?</strong><span>Step 3 of 3</span>
-              </div>
-              <div class="issue-grid" id="urgencyChoices">
-                <button type="button" class="issue-bubble" data-urgency="Whenever convenient">
-                  <span class="bubble-icon">🌿</span><strong>Whenever convenient</strong><small>It's not preventing me from working</small>
-                </button>
-                <button type="button" class="issue-bubble" data-urgency="Soon">
-                  <span class="bubble-icon">⏱</span><strong>Soon</strong><small>I'd like to get it resolved in the next few days</small>
-                </button>
-                <button type="button" class="issue-bubble" data-urgency="Priority">
-                  <span class="bubble-icon">🚨</span><strong>Priority</strong><small>This is disrupting important work</small>
-                </button>
-                <button type="button" class="issue-bubble" data-urgency="I'm not sure">
-                  <span class="bubble-icon">❔</span><strong>I'm not sure</strong><small>I'd like the technician to advise me</small>
-                </button>
-              </div>
-            </div>
+  <div class="book-step" data-step="2">
+    <div class="step-label"><strong>What are you experiencing?</strong><span>Step 2 of 3</span></div>
+    <div class="issue-grid" id="symptomChoices">
+      <button type="button" class="issue-bubble" data-symptom="It is slow"><span class="bubble-icon">🐢</span><strong>It's really slow</strong><small>Everything takes longer than it should</small></button>
+      <button type="button" class="issue-bubble" data-symptom="It won't turn on"><span class="bubble-icon">🔌</span><strong>It won't turn on</strong><small>No power, startup or boot issue</small></button>
+      <button type="button" class="issue-bubble" data-symptom="I keep getting errors"><span class="bubble-icon">⚠</span><strong>I keep getting errors</strong><small>Messages, crashes or unexpected behavior</small></button>
+      <button type="button" class="issue-bubble" data-symptom="It won't connect"><span class="bubble-icon">📡</span><strong>It won't connect</strong><small>Internet, Wi-Fi, Bluetooth or device connection</small></button>
+      <button type="button" class="issue-bubble" data-symptom="I need help setting it up"><span class="bubble-icon">🛠</span><strong>I need help setting it up</strong><small>New device, software or account setup</small></button>
+      <button type="button" class="issue-bubble" data-symptom="I need something built"><span class="bubble-icon">✨</span><strong>I need something built</strong><small>Website, system or digital project</small></button>
+    </div>
+    <div class="quick-pills">
+      <button type="button" class="quick-pill" data-extra="It started recently">Started recently</button>
+      <button type="button" class="quick-pill" data-extra="It happens randomly">Happens randomly</button>
+      <button type="button" class="quick-pill" data-extra="It happens every time">Happens every time</button>
+      <button type="button" class="quick-pill" data-extra="I have already tried restarting it">Already tried restarting</button>
+    </div>
+  </div>
 
-            <div class="book-step" data-step="4">
-              <div class="step-label">
-                <strong>Finish your service request</strong><span>Ready to book</span>
-              </div>
-              <div class="form">
-                <div class="field"><label for="bookName">Name</label><input id="bookName" required placeholder="Your name"></div>
-                <div class="field"><label for="bookEmail">Email</label><input id="bookEmail" type="email" required placeholder="you@example.com"></div>
-                <div class="field full">
-                  <label>Preferred appointment</label>
-                  <div class="appointment-picker" id="appointmentPicker">
-                    <div class="appointment-date-panel">
-                      <div class="picker-heading">
-                        <strong>Choose a date</strong>
-                        <span id="selectedDateLabel">Select a day</span>
-                      </div>
-                      <div class="calendar-header">
+  <div class="book-step" data-step="3">
+    <div class="step-label"><strong>How urgent is this?</strong><span>Step 3 of 3</span></div>
+    <div class="issue-grid" id="urgencyChoices">
+      <button type="button" class="issue-bubble" data-urgency="Whenever convenient"><span class="bubble-icon">🌿</span><strong>Whenever convenient</strong><small>It's not preventing me from working</small></button>
+      <button type="button" class="issue-bubble" data-urgency="Soon"><span class="bubble-icon">⏱</span><strong>Soon</strong><small>I'd like to get it resolved in the next few days</small></button>
+      <button type="button" class="issue-bubble" data-urgency="Priority"><span class="bubble-icon">🚨</span><strong>Priority</strong><small>This is disrupting important work</small></button>
+      <button type="button" class="issue-bubble" data-urgency="I'm not sure"><span class="bubble-icon">❔</span><strong>I'm not sure</strong><small>I'd like the technician to advise me</small></button>
+    </div>
+  </div>
 
+  <div class="book-step" data-step="4">
+    <div class="step-label"><strong>Finish your service request</strong><span>Ready to book</span></div>
+    <div class="service-checkin-fields">
+      <div class="field"><label for="bookName">Name</label><input id="bookName" name="name" required placeholder="Your name"></div>
+      <div class="field"><label for="bookEmail">Email</label><input id="bookEmail" name="email" type="email" required placeholder="you@example.com"></div>
+    </div>
+  </div>
 
+  <div class="service-checkin-footer">
+    <div class="field full service-details-field">
+      <label for="bookDetails">Anything else?</label>
+      <textarea id="bookDetails" name="details" placeholder="Add anything the bubbles didn't cover..."></textarea>
+    </div>
+    <div class="book-nav">
+      <button class="btn" type="button" id="bookBack" disabled>← Back</button>
+      <button class="btn btn-primary" type="button" id="bookNext" data-service-submit="true">Continue →</button>
+    </div>
+  </div>
 
-                        <button class="calendar-arrow" type="button" id="prevMonth" aria-label="Previous month">‹</button>
-                        <strong id="calendarMonth"></strong>
-                        <button class="calendar-arrow" type="button" id="nextMonth" aria-label="Next month">›</button>
-                      </div>
-                      <div class="calendar-weekdays">
-                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-                      </div>
-                      
-                    </div>
-                    <div class="appointment-time-panel">
-                      <div class="picker-heading">
-                        <strong>Choose a time</strong>
-                        <span id="selectedTimeLabel">Select a time</span>
-                      </div>
-                      
-                      <div class="custom-time">
-                        <label for="customTime">Or enter a time</label>
-                        <input id="customTime" type="time" aria-label="Custom appointment time">
-                      </div>
-                    </div>
-                  </div>
-                  <input id="bookDate" type="hidden" required>
-                </div>
-                <div class="field full"><label for="bookDetails">Anything else?</label><textarea id="bookDetails" placeholder="Add anything the bubbles didn't cover..."></textarea></div>
-              </div>
-            </div>
-
-            <div class="book-nav">
-              <button class="btn" type="button" id="bookBack" disabled>← Back</button>
-              <button class="btn btn-primary" type="button" id="bookNext">Continue →</button>
-            </div>
-          </form>
+  <input type="hidden" id="serviceType" name="service">
+  <input type="hidden" id="serviceUrgency" name="urgency">
+  <input type="hidden" id="serviceSelections" name="message">
+</form>
 
           <div class="booking-confirm" id="bookingConfirm">
             <div class="confirm-icon">✓</div>
@@ -2036,152 +2017,7 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-/* ===== INTERACTIVE APPOINTMENT CALENDAR ===== */
-(function(){
-  const calendarDays = $('#calendarDays');
-  const calendarMonth = $('#calendarMonth');
-  const selectedDateLabel = $('#selectedDateLabel');
-  const selectedTimeLabel = $('#selectedTimeLabel');
-  const timeGrid = $('#timeGrid');
-  const bookDate = $('#bookDate');
-  const customTime = $('#customTime');
-  if(!calendarDays || !timeGrid) return;
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
-  let chosenDate = null;
-  let chosenTime = '';
-
-  const times = [];
-  for(let hour=9; hour<=17; hour++){
-    for(const minute of [0,30]){
-      if(hour===17 && minute===30) continue;
-      const h12 = hour>12 ? hour-12 : hour;
-      const suffix = hour>=12 ? 'PM' : 'AM';
-      times.push({
-        value:`${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`,
-        label:`${h12}:${String(minute).padStart(2,'0')} ${suffix}`
-      });
-    }
-  }
-
-  function formatDate(date){
-    return date.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
-  }
-
-  function renderTimes(){
-    timeGrid.innerHTML = times.map(t =>
-      `<button type="button" class="time-choice ${chosenTime===t.value?'selected':''}" data-time="${t.value}">${t.label}</button>`
-    ).join('');
-
-    $$('.time-choice',timeGrid).forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        chosenTime=btn.dataset.time;
-        customTime.value='';
-        renderTimes();
-        updateValue();
-      });
-    });
-  }
-
-  function renderCalendar(){
-    const year=viewDate.getFullYear();
-    const month=viewDate.getMonth();
-    calendarMonth.textContent=viewDate.toLocaleDateString(undefined,{month:'long',year:'numeric'});
-
-    const firstDay=new Date(year,month,1).getDay();
-    const daysInMonth=new Date(year,month+1,0).getDate();
-    const prevDays=new Date(year,month,0).getDate();
-
-    calendarDays.innerHTML='';
-
-    for(let i=0;i<firstDay;i++){
-      const d=document.createElement('button');
-      d.type='button'; d.className='calendar-day muted';
-      d.textContent=prevDays-firstDay+i+1; d.disabled=true;
-      calendarDays.appendChild(d);
-    }
-
-    for(let day=1;day<=daysInMonth;day++){
-      const d=document.createElement('button');
-      d.type='button';
-      const date=new Date(year,month,day);
-      date.setHours(0,0,0,0);
-      d.className='calendar-day';
-      d.textContent=day;
-
-      if(date.getTime()===today.getTime()) d.classList.add('today');
-      if(chosenDate && date.getTime()===chosenDate.getTime()) d.classList.add('selected');
-      if(date<today) d.disabled=true;
-
-      d.addEventListener('click',()=>{
-        chosenDate=date;
-        selectedDateLabel.textContent=formatDate(date);
-        renderCalendar();
-        updateValue();
-      });
-      calendarDays.appendChild(d);
-    }
-
-    const totalCells=firstDay+daysInMonth;
-    const trailing=(7-totalCells%7)%7;
-    for(let i=1;i<=trailing;i++){
-      const d=document.createElement('button');
-      d.type='button'; d.className='calendar-day muted';
-      d.textContent=i; d.disabled=true;
-      calendarDays.appendChild(d);
-    }
-  }
-
-  function updateValue(){
-    if(chosenDate && chosenTime){
-      const y=chosenDate.getFullYear();
-      const m=String(chosenDate.getMonth()+1).padStart(2,'0');
-      const d=String(chosenDate.getDate()).padStart(2,'0');
-      bookDate.value=`${y}-${m}-${d}T${chosenTime}`;
-      selectedTimeLabel.textContent = new Date(`1970-01-01T${chosenTime}`).toLocaleTimeString([],{
-        hour:'numeric',minute:'2-digit'
-      });
-    }else{
-      bookDate.value='';
-      if(!chosenDate) selectedDateLabel.textContent='Select a day';
-      if(!chosenTime) selectedTimeLabel.textContent='Select a time';
-    }
-  }
-
-  customTime.addEventListener('change',()=>{
-    chosenTime=customTime.value;
-    renderTimes();
-    updateValue();
-  });
-
-  $('#prevMonth')?.addEventListener('click',()=>{
-    const candidate=new Date(viewDate.getFullYear(),viewDate.getMonth()-1,1);
-    const currentMonth=new Date(today.getFullYear(),today.getMonth(),1);
-    if(candidate>=currentMonth){viewDate=candidate;renderCalendar();}
-  });
-
-  $('#nextMonth')?.addEventListener('click',()=>{
-    viewDate=new Date(viewDate.getFullYear(),viewDate.getMonth()+1,1);
-    renderCalendar();
-  });
-
-  window.__resetAppointmentPicker=function(){
-    chosenDate=null;
-    chosenTime='';
-    viewDate=new Date(today.getFullYear(),today.getMonth(),1);
-    customTime.value='';
-    selectedDateLabel.textContent='Select a day';
-    selectedTimeLabel.textContent='Select a time';
-    bookDate.value='';
-    renderCalendar();
-    renderTimes();
-  };
-
-  renderCalendar();
-  renderTimes();
-})();
 
 
 /* ===== INTERACTIVE BOOK / TECH CHECK-IN ===== */
@@ -2207,11 +2043,27 @@ form.addEventListener('submit', async (e) => {
   let selectedUrgency = '';
 
   function updateSummary(){
-    summary.issue.textContent = selectedIssue || 'Not selected';
-    summary.symptoms.textContent = selectedSymptoms.length
+    if(summary.issue) summary.issue.textContent = selectedIssue || 'Not selected';
+    if(summary.symptoms) summary.symptoms.textContent = selectedSymptoms.length
       ? [...selectedSymptoms,...selectedExtras].join(' • ')
       : 'Not selected';
-    summary.urgency.textContent = selectedUrgency || 'Not selected';
+    if(summary.urgency) summary.urgency.textContent = selectedUrgency || 'Not selected';
+  }
+
+  function syncServiceFields(){
+    const service = $('#serviceType');
+    const urgency = $('#serviceUrgency');
+    const details = $('#serviceSelections');
+    if(service) service.value = selectedIssue;
+    if(urgency) urgency.value = selectedUrgency;
+    if(details) details.value = [
+      'SERVICE CHECK-IN',
+      'Service: ' + selectedIssue,
+      'Symptoms: ' + selectedSymptoms.join(', '),
+      'Additional details: ' + selectedExtras.join(', '),
+      'Urgency: ' + selectedUrgency,
+      'Anything else: ' + ($('#bookDetails')?.value || '')
+    ].join('\n');
   }
 
   function setStep(step){
@@ -2221,6 +2073,7 @@ form.addEventListener('submit', async (e) => {
     back.disabled = step===1;
     next.textContent = step===4 ? 'Submit Request →' : 'Continue →';
     updateSummary();
+    syncServiceFields();
   }
 
   $$('#issueChoices .issue-bubble').forEach(btn=>{
@@ -2228,6 +2081,7 @@ form.addEventListener('submit', async (e) => {
       $$('#issueChoices .issue-bubble').forEach(b=>b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedIssue = btn.dataset.issue;
+      syncServiceFields();
       updateSummary();
     });
   });
@@ -2374,6 +2228,70 @@ document.head.appendChild(script);
     switchEl.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
     if (labelEl) labelEl.textContent = light ? 'Light' : 'Dark';
     localStorage.setItem('techunify-theme', light ? 'light' : 'dark');
+  });
+})();
+</script>
+
+
+
+
+
+<script id="service-checkin-web3forms-final">
+(function(){
+  const form = document.getElementById('bookingForm');
+  const submitBtn = document.getElementById('bookNext');
+  if(!form || !submitBtn) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    formData.append("access_key", "4b4ecf9a-f8f7-4a64-a8a4-a1cac40415b9");
+
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Success! Your service request has been sent.");
+        form.style.display = "none";
+        document.getElementById('bookingConfirm').classList.add('show');
+      } else {
+        alert("Error: " + data.message);
+      }
+
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+
+  submitBtn.addEventListener('click', (e) => {
+    const step4 = form.querySelector('[data-step="4"]');
+    const isStep4 = step4 && step4.classList.contains('active');
+    if(isStep4){
+      if(!form.reportValidity()) return;
+      const details = document.getElementById('serviceSelections');
+      if(details) details.value = [
+        'SERVICE CHECK-IN',
+        'Service: ' + (document.getElementById('serviceType')?.value || ''),
+        'Symptoms: ' + (typeof selectedSymptoms !== 'undefined' ? selectedSymptoms.join(', ') : ''),
+        'Additional details: ' + (typeof selectedExtras !== 'undefined' ? selectedExtras.join(', ') : ''),
+        'Urgency: ' + (document.getElementById('serviceUrgency')?.value || ''),
+        'Anything else: ' + (document.getElementById('bookDetails')?.value || '')
+      ].join('\n');
+      form.requestSubmit();
+    }
   });
 })();
 </script>
