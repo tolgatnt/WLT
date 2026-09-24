@@ -1709,6 +1709,141 @@ html.light-theme .mobile-menu button:hover {
 }
 </style>
 
+
+<style id="welovetechnology-stationary-logo">
+/* Stationary futuristic wordmark beneath the top menu */
+.wlt-stationary-logo {
+  position: fixed;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 14px;
+  box-sizing: border-box;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.wlt-stationary-logo .wlt-wordmark {
+  position: relative;
+  display: inline-block;
+  font-family: "Orbitron", "Rajdhani", "Arial Black", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1;
+  text-transform: none;
+  color: #eaf7ff;
+  text-shadow:
+    0 0 5px rgba(60,190,255,.8),
+    0 0 14px rgba(0,145,255,.55),
+    0 0 28px rgba(0,110,255,.28);
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,.45));
+}
+
+.wlt-stationary-logo .wlt-wordmark::before,
+.wlt-stationary-logo .wlt-wordmark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #47c8ff);
+  box-shadow: 0 0 8px rgba(71,200,255,.75);
+}
+
+.wlt-stationary-logo .wlt-wordmark::before {
+  right: calc(100% + 14px);
+}
+
+.wlt-stationary-logo .wlt-wordmark::after {
+  left: calc(100% + 14px);
+  transform: scaleX(-1);
+}
+
+.wlt-stationary-logo .wlt-accent {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #63d7ff;
+  box-shadow: 0 0 10px #63d7ff, 0 0 20px rgba(0,160,255,.7);
+  animation: wltPulse 2.4s ease-in-out infinite;
+}
+
+.wlt-stationary-logo .wlt-accent.left {
+  margin-right: 360px;
+}
+
+.wlt-stationary-logo .wlt-accent.right {
+  margin-left: 360px;
+}
+
+@keyframes wltPulse {
+  0%,100% { opacity:.55; transform:scale(.85); }
+  50% { opacity:1; transform:scale(1.15); }
+}
+
+/* Light theme: retain a futuristic blue wordmark against the light page */
+html.light-theme .wlt-stationary-logo .wlt-wordmark {
+  color: #1683ff;
+  text-shadow:
+    0 0 5px rgba(22,131,255,.35),
+    0 0 12px rgba(22,131,255,.2);
+}
+
+@media (max-width: 600px) {
+  .wlt-stationary-logo {
+    position: fixed;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 24px);
+    padding: 6px 8px;
+    z-index: 9998;
+  }
+
+  .wlt-stationary-logo .wlt-wordmark {
+    font-size: 1.05rem;
+    letter-spacing: .11em;
+  }
+
+  .wlt-stationary-logo .wlt-wordmark::before,
+  .wlt-stationary-logo .wlt-wordmark::after {
+    width: 20px;
+  }
+
+  .wlt-stationary-logo .wlt-wordmark::before {
+    right: calc(100% + 8px);
+  }
+
+  .wlt-stationary-logo .wlt-wordmark::after {
+    left: calc(100% + 8px);
+  }
+
+  .wlt-stationary-logo .wlt-accent {
+    display: none;
+  }
+}
+</style>
+
+
+<style id="welovetechnology-floating-final">
+.wlt-stationary-logo,
+.wlt-stationary-logo .wlt-wordmark {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.wlt-stationary-logo .wlt-wordmark {
+  white-space: nowrap !important;
+}
+</style>
+
 </head>
 
 
@@ -1737,6 +1872,13 @@ html.light-theme .mobile-menu button:hover {
     
     <a href="#contact">Contact</a>
   </nav>
+
+<div class="wlt-stationary-logo" aria-label="WeLoveTechnology">
+  <span class="wlt-accent left" aria-hidden="true"></span>
+  <span class="wlt-wordmark">WeLoveTechnology</span>
+  <span class="wlt-accent right" aria-hidden="true"></span>
+</div>
+
 
   <main>
     <!-- HERO -->
