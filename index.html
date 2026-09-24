@@ -1645,6 +1645,70 @@ html.light-theme header nav a:hover {
 .book-nav .btn{width:100%!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;}
 @media(max-width:640px){.issue-grid,.service-checkin-fields{grid-template-columns:1fr!important}.book-nav{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
+
+<style id="light-theme-mobile-menu-white-final">
+/* Light theme navigation: white by default on desktop and mobile */
+html.light-theme nav a,
+html.light-theme nav button,
+html.light-theme .nav a,
+html.light-theme .nav button,
+html.light-theme header nav a,
+html.light-theme header nav button,
+html.light-theme .menu a,
+html.light-theme .menu button,
+html.light-theme .mobile-menu a,
+html.light-theme .mobile-menu button {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Light blue hover/tap state */
+html.light-theme nav a:hover,
+html.light-theme nav button:hover,
+html.light-theme .nav a:hover,
+html.light-theme .nav button:hover,
+html.light-theme header nav a:hover,
+html.light-theme header nav button:hover,
+html.light-theme .menu a:hover,
+html.light-theme .menu button:hover,
+html.light-theme .mobile-menu a:hover,
+html.light-theme .mobile-menu button:hover {
+  color: #8fd3ff !important;
+  -webkit-text-fill-color: #8fd3ff !important;
+}
+
+/* Explicit mobile override to beat inherited/default black text */
+@media (max-width: 768px) {
+  html.light-theme nav a,
+  html.light-theme nav button,
+  html.light-theme .nav a,
+  html.light-theme .nav button,
+  html.light-theme header nav a,
+  html.light-theme header nav button,
+  html.light-theme .menu a,
+  html.light-theme .menu button,
+  html.light-theme .mobile-menu a,
+  html.light-theme .mobile-menu button {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  html.light-theme nav a:hover,
+  html.light-theme nav button:hover,
+  html.light-theme .nav a:hover,
+  html.light-theme .nav button:hover,
+  html.light-theme header nav a:hover,
+  html.light-theme header nav button:hover,
+  html.light-theme .menu a:hover,
+  html.light-theme .menu button:hover,
+  html.light-theme .mobile-menu a:hover,
+  html.light-theme .mobile-menu button:hover {
+    color: #8fd3ff !important;
+    -webkit-text-fill-color: #8fd3ff !important;
+  }
+}
+</style>
+
 </head>
 
 
