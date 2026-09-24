@@ -413,7 +413,7 @@ main{grid-column:2;min-width:0}
   background:rgba(68,227,161,.035);padding:15px;
 }
 .book-summary-title{
-  font-size:9px;color:var(--green);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;
+  font-size:9px;color:var(--green);font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;
 }
 .summary-line{
   display:flex;justify-content:space-between;gap:15px;padding:7px 0;
@@ -767,6 +767,166 @@ body.light-mode .theme-toggle button.active{
   .theme-toggle{top:10px;right:10px}
   .theme-label{display:none}
 }
+
+/* V28 — definitive hero spacing fix
+   The logo is a visual overlay only. It does not occupy document space.
+   The Home hero is top-aligned so TECH HELP starts immediately below the nav. */
+body::after{
+  content:"TECH  UNIFY";
+  position:fixed;
+  top:76px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:99999;
+  display:block;
+  width:max-content;
+  margin:0;
+  padding:0;
+  pointer-events:none;
+  white-space:nowrap;
+  font:800 29px/1 "Orbitron","Rajdhani","Arial Black",sans-serif;
+  letter-spacing:.22em;
+  color:#1683ff;
+  text-shadow:0 0 16px rgba(22,131,255,.35);
+}
+body::after{
+  background:linear-gradient(90deg,#fff 0%,#fff 42%,#1683ff 42%,#1683ff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+html.light-theme body::after{
+  color:#111827;
+  text-shadow:none;
+}
+html.light-theme body::before{
+  color:#1683ff;
+  text-shadow:none;
+}
+
+/* This is the actual fix: the hero was vertically centering its contents. */
+.home-sales{
+  justify-content:flex-start !important;
+  padding-top:20px !important;
+}
+
+/* Keep the logo out of layout calculations at every breakpoint. */
+@media(max-width:600px){
+  body::after{
+    top:66px;
+    font-size:21px;
+    letter-spacing:.15em;
+  }
+  .home-sales{
+    justify-content:flex-start !important;
+    padding-top:20px !important;
+  }
+}
+
+
+/* Light theme logo: TECH black, UNIFY blue */
+html.light-theme body::after{
+  color:transparent !important;
+  background:linear-gradient(
+    90deg,
+    #111827 0%,
+    #111827 42%,
+    #1683ff 42%,
+    #1683ff 100%
+  ) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  text-shadow:none !important;
+}
+
+
+/* Light theme: white interior for the What Can We Fix bubbles */
+html.light-theme .fix-bubble,
+html.light-theme .fix-bubbles > *,
+html.light-theme .fix-grid > *,
+html.light-theme .repair-bubble,
+html.light-theme .repair-bubbles > *,
+html.light-theme .problem-bubble,
+html.light-theme .issue-bubble{
+  background:#fff !important;
+  background-color:#fff !important;
+}
+
+
+/* V34 — exact bubbles shown in "What Can We Fix?" area.
+   The page uses body.light-mode (not html.light-theme). */
+body.light-mode .home-trust-strip > div,
+body.light-mode .home-service-bubbles > a{
+  background:#fff !important;
+  background-color:#fff !important;
+}
+
+
+/* V35 — darker borders for the Light Theme bubbles */
+body.light-mode .home-trust-strip > div,
+body.light-mode .home-service-bubbles > a{
+  border-color:rgba(20,33,43,.28) !important;
+}
+
+
+/* V36 — clearly visible borders for the exact Home bubbles in Light Theme */
+body.light-mode .home-trust-strip > div,
+body.light-mode .home-service-bubbles > a{
+  background:#fff !important;
+  border:1px solid #8b9aa8 !important;
+  border-color:#8b9aa8 !important;
+}
+
+
+/* V37 — Light Theme Home bubbles: dark surfaces with white text */
+body.light-mode .home-trust-strip > div,
+body.light-mode .home-service-bubbles > a{
+  background:#14212b !important;
+  background-color:#14212b !important;
+  border:1px solid #14212b !important;
+  border-color:#14212b !important;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  box-shadow:0 6px 18px rgba(20,33,43,.14);
+}
+
+body.light-mode .home-trust-strip > div *,
+body.light-mode .home-service-bubbles > a *{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+}
+
+body.light-mode .home-trust-strip > div strong{
+  color:#20c8e8 !important;
+  -webkit-text-fill-color:#20c8e8 !important;
+}
+
+
+/* V38 — FIX: the theme switch adds .light-theme to <html>, not .light-mode to <body>.
+   These are the actual Home-section bubbles under the hero text. */
+html.light-theme .home-service-bubbles > a,
+html.light-theme .home-trust-strip > div{
+  background:#14212b !important;
+  background-color:#14212b !important;
+  border:1px solid #14212b !important;
+  border-color:#14212b !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  box-shadow:0 6px 18px rgba(20,33,43,.18) !important;
+}
+
+html.light-theme .home-service-bubbles > a *,
+html.light-theme .home-trust-strip > div *{
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+html.light-theme .home-trust-strip > div strong{
+  color:#20c8e8 !important;
+  -webkit-text-fill-color:#20c8e8 !important;
+}
+
 </style>
 
 <style id="nav-title-alignment">
@@ -1712,136 +1872,12 @@ html.light-theme .mobile-menu button:hover {
 
 <style id="welovetechnology-stationary-logo">
 /* Stationary futuristic wordmark beneath the top menu */
-.wlt-stationary-logo {
-  position: fixed;
-  top: 78px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: calc(100vw - 40px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 14px;
-  box-sizing: border-box;
-  z-index: 9998;
-  pointer-events: none;
-}
 
-.wlt-stationary-logo .wlt-wordmark {
-  position: relative;
-  display: inline-block;
-  font-family: "Orbitron", "Rajdhani", "Arial Black", sans-serif;
-  font-size: clamp(1.35rem, 3vw, 2.15rem);
-  font-weight: 800;
-  letter-spacing: .18em;
-  line-height: 1;
-  text-transform: none;
-  color: #eaf7ff;
-  text-shadow:
-    0 0 5px rgba(60,190,255,.8),
-    0 0 14px rgba(0,145,255,.55),
-    0 0 28px rgba(0,110,255,.28);
-  filter: drop-shadow(0 3px 10px rgba(0,0,0,.45));
-}
-
-.wlt-stationary-logo .wlt-wordmark::before,
-.wlt-stationary-logo .wlt-wordmark::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 42px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #47c8ff);
-  box-shadow: 0 0 8px rgba(71,200,255,.75);
-}
-
-.wlt-stationary-logo .wlt-wordmark::before {
-  right: calc(100% + 14px);
-}
-
-.wlt-stationary-logo .wlt-wordmark::after {
-  left: calc(100% + 14px);
-  transform: scaleX(-1);
-}
-
-.wlt-stationary-logo .wlt-accent {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #63d7ff;
-  box-shadow: 0 0 10px #63d7ff, 0 0 20px rgba(0,160,255,.7);
-  animation: wltPulse 2.4s ease-in-out infinite;
-}
-
-.wlt-stationary-logo .wlt-accent.left {
-  margin-right: 360px;
-}
-
-.wlt-stationary-logo .wlt-accent.right {
-  margin-left: 360px;
-}
-
-@keyframes wltPulse {
-  0%,100% { opacity:.55; transform:scale(.85); }
-  50% { opacity:1; transform:scale(1.15); }
-}
-
-/* Light theme: retain a futuristic blue wordmark against the light page */
-html.light-theme .wlt-stationary-logo .wlt-wordmark {
-  color: #1683ff;
-  text-shadow:
-    0 0 5px rgba(22,131,255,.35),
-    0 0 12px rgba(22,131,255,.2);
-}
-
-@media (max-width: 600px) {
-  .wlt-stationary-logo {
-    position: fixed;
-    top: 68px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: max-content;
-    max-width: calc(100vw - 24px);
-    padding: 6px 8px;
-    z-index: 9998;
-  }
-
-  .wlt-stationary-logo .wlt-wordmark {
-    font-size: 1.05rem;
-    letter-spacing: .11em;
-  }
-
-  .wlt-stationary-logo .wlt-wordmark::before,
-  .wlt-stationary-logo .wlt-wordmark::after {
-    width: 20px;
-  }
-
-  .wlt-stationary-logo .wlt-wordmark::before {
-    right: calc(100% + 8px);
-  }
-
-  .wlt-stationary-logo .wlt-wordmark::after {
-    left: calc(100% + 8px);
-  }
-
-  .wlt-stationary-logo .wlt-accent {
-    display: none;
-  }
-}
 </style>
 
 
 <style id="welovetechnology-floating-final">
-.wlt-stationary-logo,
-.wlt-stationary-logo .wlt-wordmark {
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-.wlt-stationary-logo .wlt-wordmark {
-  white-space: nowrap !important;
-}
+
 </style>
 
 </head>
