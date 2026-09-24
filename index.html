@@ -1254,7 +1254,7 @@ body.light-mode .techunify-text-logo .tu-unify{
   background-clip:text !important;
   color:transparent !important;
 }
-body.light-mode .home-kicker,
+body.light-mode .home-kicker{color:#000000 !important;}
 body.light-mode .kicker,
 body.light-mode .home-mini-title{color:#087ea5 !important;}
 body.light-mode .promo-flyer{
@@ -1334,12 +1334,275 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
 }
 </style>
 
+
+<style id="techunify-theme-switch-css">
+  .theme-switcher{
+    position:fixed;
+    top:82px;
+    right:22px;
+    z-index:9998;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 10px;
+    border:1px solid rgba(120,190,255,.28);
+    border-radius:14px;
+    background:rgba(7,13,24,.72);
+    backdrop-filter:blur(14px);
+    box-shadow:0 10px 28px rgba(0,0,0,.24), inset 0 0 0 1px rgba(255,255,255,.035);
+  }
+  .theme-switcher .switch-label{
+    font-size:10px;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:#b9c9dc;
+    user-select:none;
+  }
+  .light-switch{
+    width:48px;
+    height:27px;
+    border:0;
+    padding:0;
+    border-radius:999px;
+    position:relative;
+    cursor:pointer;
+    background:linear-gradient(145deg,#111a29,#25344a);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);
+    transition:.28s ease;
+  }
+  .light-switch::before{
+    content:"";
+    position:absolute;
+    left:4px;
+    top:4px;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#f7fbff,#9eb9d4);
+    box-shadow:0 2px 5px rgba(0,0,0,.45),0 0 10px rgba(110,194,255,.22);
+    transition:.28s ease;
+  }
+  .light-switch::after{
+    content:"";
+    position:absolute;
+    right:8px;
+    top:8px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#7b8da2;
+    box-shadow:0 0 5px rgba(123,141,162,.45);
+    transition:.28s ease;
+  }
+  .light-switch[aria-checked="true"]{
+    background:linear-gradient(145deg,#dceeff,#83c7ff);
+    box-shadow:inset 0 2px 4px rgba(45,117,173,.22),0 0 16px rgba(64,168,255,.24);
+  }
+  .light-switch[aria-checked="true"]::before{
+    transform:translateX(21px);
+    background:#fff;
+    box-shadow:0 2px 5px rgba(0,0,0,.22),0 0 12px rgba(57,170,255,.45);
+  }
+  .light-switch[aria-checked="true"]::after{
+    transform:translateX(-21px);
+    background:#fff;
+  }
+
+  /* Light theme: white + blue + black, while preserving the existing layout. */
+  html.light-theme body{
+    background:
+      radial-gradient(circle at 78% 12%, rgba(61,165,255,.16), transparent 30%),
+      linear-gradient(135deg,#f8fbff 0%,#eef6ff 52%,#ffffff 100%) !important;
+    color:#101827 !important;
+  }
+  html.light-theme .sidebar,
+  html.light-theme .mobile-top{
+    background:rgba(255,255,255,.88) !important;
+    border-color:rgba(19,46,76,.12) !important;
+    box-shadow:0 12px 35px rgba(19,46,76,.08) !important;
+  }
+  html.light-theme .brand,
+  html.light-theme .nav a,
+  html.light-theme .sidebar-bottom,
+  html.light-theme .status-card{
+    color:#101827 !important;
+  }
+  html.light-theme .nav a{
+    background:rgba(17,78,128,.035) !important;
+    border-color:rgba(17,78,128,.09) !important;
+  }
+  html.light-theme .nav a:hover,
+  html.light-theme .nav a.active{
+    background:linear-gradient(135deg,#0c76c9,#1aa3ff) !important;
+    color:#fff !important;
+    border-color:transparent !important;
+    box-shadow:0 8px 22px rgba(17,126,211,.22) !important;
+  }
+  html.light-theme .status-card{
+    background:linear-gradient(145deg,#f4faff,#ffffff) !important;
+    border-color:rgba(19,86,140,.12) !important;
+  }
+  html.light-theme main,
+  html.light-theme section{
+    color:#101827;
+  }
+  html.light-theme .glass,
+  html.light-theme .panel,
+  html.light-theme .card,
+  html.light-theme .about-panel,
+  html.light-theme .contact-panel,
+  html.light-theme .service-card,
+  html.light-theme .book-panel{
+    background:rgba(255,255,255,.84) !important;
+    border-color:rgba(17,76,126,.12) !important;
+    box-shadow:0 18px 45px rgba(15,52,82,.09) !important;
+    color:#101827 !important;
+  }
+  html.light-theme input,
+  html.light-theme textarea,
+  html.light-theme select{
+    background:#fff !important;
+    color:#101827 !important;
+    border-color:rgba(17,76,126,.18) !important;
+  }
+  html.light-theme input::placeholder,
+  html.light-theme textarea::placeholder{
+    color:#6c7d90 !important;
+  }
+  html.light-theme .theme-switcher{
+    background:rgba(255,255,255,.88);
+    border-color:rgba(20,91,148,.16);
+    box-shadow:0 10px 28px rgba(22,67,103,.12), inset 0 0 0 1px rgba(255,255,255,.8);
+  }
+  html.light-theme .theme-switcher .switch-label{color:#27445e;}
+  @media (max-width:700px){
+    .theme-switcher{top:76px;right:14px;}
+    .theme-switcher .switch-label{display:none;}
+  }
+</style>
+
+
+<style id="techunify-light-black-unhovered">
+/* Light theme: all non-hovered/default foregrounds are black. */
+html.light-theme,
+html.light-theme body {
+  color: #000 !important;
+}
+html.light-theme h1,
+html.light-theme h2,
+html.light-theme h3,
+html.light-theme h4,
+html.light-theme h5,
+html.light-theme h6,
+html.light-theme p,
+html.light-theme span,
+html.light-theme label,
+html.light-theme li,
+html.light-theme .nav a,
+html.light-theme .brand,
+html.light-theme .status-card,
+html.light-theme .status-card p,
+html.light-theme .about-panel,
+html.light-theme .about-panel *,
+html.light-theme .contact-panel,
+html.light-theme .contact-panel *,
+html.light-theme .service-card,
+html.light-theme .service-card *,
+html.light-theme .book-panel,
+html.light-theme .book-panel *,
+html.light-theme .glass,
+html.light-theme .glass *,
+html.light-theme .panel,
+html.light-theme .panel *,
+html.light-theme .card,
+html.light-theme .card * {
+  color: #000 !important;
+}
+
+/* Keep links/buttons black at rest; existing hover rules remain visually active. */
+html.light-theme a:not(:hover),
+html.light-theme button:not(:hover) {
+  color: #000 !important;
+}
+
+/* Form controls remain clean and readable in the light theme. */
+html.light-theme input,
+html.light-theme textarea,
+html.light-theme select {
+  color: #000 !important;
+}
+html.light-theme input::placeholder,
+html.light-theme textarea::placeholder {
+  color: #000 !important;
+  opacity: .62;
+}
+
+/* The theme switch itself keeps its own visual treatment. */
+html.light-theme .light-switch {
+  color: #000 !important;
+}
+</style>
+
+
+<style id="techunify-light-black-borders-unhovered-only">
+/* Light theme: black borders ONLY while controls are not hovered. */
+html.light-theme .nav a:not(:hover),
+html.light-theme .status-card:not(:hover),
+html.light-theme .glass:not(:hover),
+html.light-theme .panel:not(:hover),
+html.light-theme .card:not(:hover),
+html.light-theme .about-panel:not(:hover),
+html.light-theme .contact-panel:not(:hover),
+html.light-theme .service-card:not(:hover),
+html.light-theme .book-panel:not(:hover),
+html.light-theme input:not(:hover),
+html.light-theme textarea:not(:hover),
+html.light-theme select:not(:hover),
+html.light-theme button:not(:hover),
+html.light-theme .home-bubble:not(:hover),
+html.light-theme .service-bubble:not(:hover),
+html.light-theme .book-option:not(:hover),
+html.light-theme .contact-option:not(:hover) {
+  border-color: #000 !important;
+}
+
+/* The theme switch keeps its own appearance. */
+html.light-theme .theme-switcher {
+  border-color: rgba(20,91,148,.16) !important;
+}
+</style>
+
+
+<style id="techunify-home-kicker-black-fixed">
+/* Light theme: force the Home kicker text to black. */
+html.light-theme .home-kicker {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
+</style>
+
+
+<style id="need-tech-fixed-blue-style">
+.need-tech-fixed-blue {
+  color: #1683ff !important;
+  -webkit-text-fill-color: #1683ff !important;
+}
+</style>
+
 </head>
 
 
 <a class="floating-phone" href="tel:+18189608689" aria-label="Call TechUnify at (818) 960-8689" title="Call (818) 960-8689">☎</a>
 
 <body>
+
+<div class="theme-switcher" aria-label="Website theme">
+  <span class="switch-label" id="themeSwitchLabel">Dark</span>
+  <button class="light-switch" id="themeSwitch" type="button"
+          role="switch" aria-checked="false" aria-label="Switch to light theme"
+          title="Switch between dark and light themes"></button>
+</div>
+
 
 
 
@@ -1362,7 +1625,7 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
   <div class="home-hero-grid">
     <div class="home-copy">
       <div class="home-kicker">TECH HELP • REPAIRS • BUILDS</div>
-      <h1>Need tech fixed?<br><span>We’ve got you.</span></h1>
+      <h1><span class="need-tech-fixed-blue">Need tech fixed?</span><br><span>We’ve got you.</span></h1>
       <p class="home-short">Computer problems. Wi-Fi issues. Slow devices. Websites. We fix it.</p>
 
       
@@ -2089,5 +2352,31 @@ document.head.appendChild(script);
 
 
 </script>
+
+<script id="techunify-theme-switch-js">
+(function () {
+  const root = document.documentElement;
+  const switchEl = document.getElementById('themeSwitch');
+  const labelEl = document.getElementById('themeSwitchLabel');
+  if (!switchEl) return;
+
+  const savedTheme = localStorage.getItem('techunify-theme');
+  if (savedTheme === 'light') {
+    root.classList.add('light-theme');
+    switchEl.setAttribute('aria-checked', 'true');
+    switchEl.setAttribute('aria-label', 'Switch to dark theme');
+    if (labelEl) labelEl.textContent = 'Light';
+  }
+
+  switchEl.addEventListener('click', function () {
+    const light = root.classList.toggle('light-theme');
+    switchEl.setAttribute('aria-checked', String(light));
+    switchEl.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    if (labelEl) labelEl.textContent = light ? 'Light' : 'Dark';
+    localStorage.setItem('techunify-theme', light ? 'light' : 'dark');
+  });
+})();
+</script>
+
 </body>
 </html>
