@@ -1273,7 +1273,50 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
 
 
 
+
+<style id="v109-floating-phone">
+/* V109: floating direct-call phone button */
+.floating-phone{
+  position:fixed;
+  top:24px;
+  right:24px;
+  z-index:10000;
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#39a9ff;
+  color:#fff;
+  text-decoration:none;
+  font-size:22px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.floating-phone:hover{
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 12px 30px rgba(0,0,0,.3);
+}
+.floating-phone:focus-visible{
+  outline:3px solid rgba(57,169,255,.35);
+  outline-offset:3px;
+}
+@media (max-width:760px){
+  .floating-phone{
+    top:16px;
+    right:16px;
+    width:48px;
+    height:48px;
+    font-size:20px;
+  }
+}
+</style>
+
 </head>
+
+
+<a class="floating-phone" href="tel:+18189608689" aria-label="Call TechUnify at (818) 960-8689" title="Call (818) 960-8689">☎</a>
 
 <body>
 
@@ -1301,12 +1344,7 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
       <h1>Need tech fixed?<br><span>We’ve got you.</span></h1>
       <p class="home-short">Computer problems. Wi-Fi issues. Slow devices. Websites. We fix it.</p>
 
-      <div class="home-bubbles">
-        
-        
-        
-        
-      </div>
+      
 
       
     </div>
@@ -1340,8 +1378,7 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
           <div class="kicker">Service check-in</div>
           <h2 class="section-title">Tell us what's going wrong.</h2>
         </div>
-        <p class="section-intro">
-        </p>
+        
       </div>
 
       <div class="book-shell reveal">
@@ -1465,14 +1502,14 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
                       <div class="calendar-weekdays">
                         <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
                       </div>
-                      <div class="calendar-days" id="calendarDays"></div>
+                      
                     </div>
                     <div class="appointment-time-panel">
                       <div class="picker-heading">
                         <strong>Choose a time</strong>
                         <span id="selectedTimeLabel">Select a time</span>
                       </div>
-                      <div class="time-grid" id="timeGrid"></div>
+                      
                       <div class="custom-time">
                         <label for="customTime">Or enter a time</label>
                         <input id="customTime" type="time" aria-label="Custom appointment time">
@@ -1597,7 +1634,7 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
         <div class="contact-info">
           <div class="contact-item"><small>Service Area</small><strong>Local • Remote • By appointment</strong></div>
           <div class="contact-item"><small>Email</small><strong>tolgatnt@gmail.com</strong></div>
-          <div class="contact-item"><small>Phone</small><strong>(818) 960 86 89</strong></div>
+          <div class="contact-item"><small>Phone</small><strong>(818) 960-8689</strong></div>
           <div class="contact-item"><small>Hours</small><strong>Mon–Fri • 9:00 AM–6:00 PM</strong></div>
         </div>
 
@@ -1619,20 +1656,20 @@ body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5
 
 
     <footer class="footer">
-      <div>© <span id="year"></span> <strong>WeLoveTechnology</strong> — Digital + Technology Services</div>
-      <div>Prototype / Built with HTML • CSS • JavaScript • SVG</div>
+      <div>©  <strong>WeLoveTechnology</strong> — Digital + Technology Services</div>
+      
     </footer>
   </main>
 </div>
 
 <!-- FLOATING BOOK ACTION -->
 <a class="floating-book" href="#book" id="floatingBook" aria-label="Book a technology service appointment">
-  <span class="floating-book-pulse"></span>
+  
   <span class="floating-book-icon">📅</span>
   <span class="floating-book-label">Book a Service</span>
 </a>
 
-<div class="toast" id="toast"></div>
+
 
 <script>
 /* ===== COMPONENT HELPERS ===== */
@@ -1991,7 +2028,7 @@ const schema = {
   "description":"Website development, computer repair, software support and technology services.",
   "url":"https://vertextechworks.example",
   "email":"tolgatnt@gmail.com",
-  "telephone":"+1-818-960-8689",
+  "telephone":"+1-(818) 960-8689",
   "serviceType":[
     "Website Design","Web Development","Computer Repair",
     "Software Support","Network Support","Technology Consulting"
