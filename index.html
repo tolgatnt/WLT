@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WeLoveTechnology — website development, computer repair, software support, networking and trusted technology services.">
+<title>WeLoveTechnology | Digital + Technology Services</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  TECHUNIFY PROTOTYPE
+  Architecture inspired by the Spaces project:
+  - focused sections
+  - persistent navigation
+  - reusable cards/components
+  - responsive mobile behavior
+  - testable, self-contained prototype
+-->
+
+<style>
+:root{
+  --bg:#050a12;
+  --bg2:#081321;
+  --panel:rgba(11,24,39,.78);
+  --panel-solid:#0b1828;
+  --line:rgba(124,160,197,.18);
+  --text:#edf6ff;
+  --muted:#8ea4ba;
+  --cyan:#39d9ff;
+  --blue:#4b7cff;
+  --violet:#9b6cff;
+  --green:#44e3a1;
+  --orange:#ffb45c;
+  --danger:#ff5d73;
+  --shadow:0 24px 80px rgba(0,0,0,.38);
+  --radius:24px;
+  --nav-width:238px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 75% 8%,rgba(57,217,255,.08),transparent 28%),
+    radial-gradient(circle at 20% 75%,rgba(155,108,255,.07),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,sans-serif;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,black,transparent 88%);
+}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh;display:block;}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--nav-width);
+  padding:24px 16px;
+  border-right:1px solid var(--line);
+  background:rgba(4,11,20,.82);
+  backdrop-filter:blur(22px);
+  z-index:50;
+  display:flex;flex-direction:column;
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  padding:8px 10px 25px;
+}
+.logo{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--cyan),var(--blue) 58%,var(--violet));
+  box-shadow:0 0 28px rgba(57,217,255,.2);
+  position:relative;overflow:hidden;
+}
+.logo::after{
+  content:"";position:absolute;inset:2px;border:1px solid rgba(255,255,255,.45);
+  border-radius:11px;
+}
+.logo svg{width:23px;height:23px;position:relative;z-index:1}
+.brand-name{font-family:"Space Grotesk";font-weight:700;letter-spacing:-.04em}
+.brand-sub{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;margin-top:2px}
+
+.nav{display:grid;gap:7px;margin-top:8px}
+.nav a{
+  position:relative;display:flex;align-items:center;gap:11px;
+  padding:11px 12px;border-radius:13px;color:#91a8bd;
+  font-size:13px;font-weight:600;transition:.22s ease;
+}
+.nav a svg{width:17px;height:17px;stroke:currentColor}
+.nav a:hover,.nav a.active{
+  color:#fff;background:linear-gradient(90deg,rgba(57,217,255,.11),rgba(75,124,255,.08));
+}
+.nav a.active::before{
+  content:"";position:absolute;left:-16px;width:3px;height:20px;
+  border-radius:0 5px 5px 0;background:var(--cyan);
+  box-shadow:0 0 14px var(--cyan);
+}
+.sidebar-bottom{margin-top:auto}
+.status-card{
+  border:1px solid var(--line);border-radius:18px;padding:13px;
+  background:linear-gradient(145deg,rgba(20,43,66,.62),rgba(9,20,33,.55));
+}
+.status-line{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.status-card p{margin:8px 0 0;color:var(--muted);font-size:10px;line-height:1.55}
+
+.mobile-top{
+  display:none;position:fixed;top:0;left:0;right:0;height:64px;
+  background:rgba(4,11,20,.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);z-index:60;
+  padding:10px 15px;align-items:center;justify-content:space-between;
+}
+.menu-btn{
+  width:40px;height:40px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  color:white;border-radius:11px;
+}
+
+.mobile-nav-top{display:flex;position:fixed;top:0;left:0;right:0;height:52px;z-index:59;align-items:center;gap:6px;padding:5px 16px;overflow-x:auto;white-space:nowrap;background:rgba(4,11,20,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);scrollbar-width:none;}
+
+@media(max-width:760px){
+  .mobile-nav-top a{
+    flex:0 0 auto;
+    padding:8px 12px;
+    border-radius:9px;
+    color:#91a8bd;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s ease;
+  }
+  .mobile-nav-top a:hover,.mobile-nav-top a:active{
+    color:#fff;
+    background:rgba(57,217,255,.12);
+  }
+  main{padding-top:110px}
+  .section{padding-top:55px}
+  .hero{min-height:calc(100vh - 110px);padding-top:55px}
+  body.light-mode .mobile-nav-top{
+    background:rgba(255,255,255,.96);
+    border-bottom-color:rgba(20,33,43,.10);
+  }
+  body.light-mode .mobile-nav-top a{color:#536574}
+  body.light-mode .mobile-nav-top a:hover,body.light-mode .mobile-nav-top a:active{
+    color:#14212b;background:rgba(8,126,165,.08);
+  }
+}
+
+/* MAIN */
+main{grid-column:2;min-width:0}
+.section{
+  min-height:100vh;
+  padding:92px clamp(24px,5vw,78px);
+  max-width:1450px;margin:auto;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.hero{position:relative;overflow:hidden}
+.hero-orb{
+  position:absolute;width:520px;height:520px;border-radius:50%;
+  right:-170px;top:40px;
+  background:radial-gradient(circle,rgba(57,217,255,.12),transparent 68%);
+  pointer-events:none;
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;color:var(--cyan);
+  font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:17px;
+}
+.kicker::before{content:"";width:28px;height:1px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.process-kicker{padding:8px 14px;border:1px solid rgba(57,217,255,.28);border-radius:999px;background:rgba(57,217,255,.07);box-shadow:0 0 18px rgba(57,217,255,.07);margin-bottom:17px}
+.process-kicker::before{display:none}
+.hero h1{
+  max-width:920px;margin:0;
+  font:700 clamp(42px,6.4vw,88px)/.96 "Space Grotesk",sans-serif;
+  letter-spacing:-.065em;
+}
+.gradient-text{
+  background:linear-gradient(100deg,#fff 0%,#bcefff 34%,#6ce8ff 60%,#a98aff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-copy{max-width:680px;color:var(--muted);font-size:17px;line-height:1.75;margin:24px 0 30px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--line);border-radius:13px;padding:12px 17px;
+  color:#dcecff;background:rgba(255,255,255,.035);font-weight:700;font-size:13px;
+  transition:.22s ease;display:inline-flex;align-items:center;gap:8px;
+}
+.btn:hover{transform:translateY(-2px);border-color:rgba(57,217,255,.55);box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.btn-primary{
+  color:#04101a;border-color:transparent;
+  background:linear-gradient(100deg,var(--cyan),#74b7ff);
+  box-shadow:0 10px 28px rgba(57,217,255,.17);
+}
+.btn-primary:hover{box-shadow:0 15px 35px rgba(57,217,255,.28)}
+
+.hero-metrics{
+  display:grid;grid-template-columns:repeat(3,minmax(120px,180px));
+  gap:10px;margin-top:52px;
+}
+.metric{padding:13px 14px;border-left:1px solid var(--line)}
+.metric strong{display:block;font:700 25px "Space Grotesk";color:#fff}
+.metric span{color:var(--muted);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}
+.section-title{margin:0;font:700 clamp(31px,4vw,52px)/1 "Space Grotesk";letter-spacing:-.05em}
+.section-intro{max-width:520px;color:var(--muted);line-height:1.7;font-size:14px;margin:0}
+
+.grid{display:grid;gap:15px}
+.services-grid{grid-template-columns:repeat(4,1fr)}
+.card{
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(15,31,49,.82),rgba(7,17,29,.76));
+  padding:24px;transition:.3s ease;
+}
+.card::before{
+  content:"";position:absolute;inset:0;opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(57,217,255,.13),transparent 35%);
+  transition:opacity .3s;
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(57,217,255,.32);box-shadow:var(--shadow)}
+.card:hover::before{opacity:1}
+.card>*{position:relative}
+.service-icon{
+  width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:rgba(57,217,255,.08);color:var(--cyan);border:1px solid rgba(57,217,255,.18);
+  margin-bottom:24px;
+}
+.service-icon svg{width:22px;height:22px}
+.card h3{margin:0 0 9px;font:700 20px "Space Grotesk"}
+.card p{color:var(--muted);font-size:13px;line-height:1.7;margin:0}
+.tag{display:inline-flex;margin-top:18px;padding:6px 9px;border-radius:999px;border:1px solid var(--line);font-size:9px;color:#a9bed2;text-transform:uppercase;letter-spacing:.12em}
+
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch}
+.about-panel{padding:34px}
+.about-panel p{color:var(--muted);line-height:1.8;font-size:14px}
+.about-points{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:25px}
+.point{padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.018)}
+.point strong{font-size:12px}.point span{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.5}
+
+.terminal{
+  min-height:100%;border:1px solid rgba(68,227,161,.18);border-radius:24px;
+  background:#06110f;overflow:hidden;box-shadow:var(--shadow);
+}
+.term-head{height:42px;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid rgba(68,227,161,.12)}
+.term-dot{width:8px;height:8px;border-radius:50%;background:#3f5}
+.term-body{padding:24px;font:12px/2.1 ui-monospace,SFMono-Regular,Consolas,monospace;color:#94c7b2}
+.term-green{color:var(--green)}.term-blue{color:#73c9ff}.term-white{color:#e9fff5}
+
+.vision{
+  position:relative;overflow:hidden;border-radius:30px;padding:50px;
+  border:1px solid rgba(155,108,255,.2);
+  background:
+    radial-gradient(circle at 85% 30%,rgba(155,108,255,.15),transparent 28%),
+    linear-gradient(135deg,#0b1728,#0a101d);
+}
+.vision h2{max-width:850px;margin:0;font:700 clamp(34px,4.7vw,64px)/1.05 "Space Grotesk";letter-spacing:-.055em}
+.vision p{max-width:680px;color:var(--muted);line-height:1.8;font-size:15px}
+.vision-mark{
+  position:absolute;right:55px;bottom:35px;font:700 90px "Space Grotesk";
+  color:rgba(255,255,255,.025);letter-spacing:-.1em;
+}
+
+.process-grid{grid-template-columns:repeat(4,1fr)}
+.step{padding:24px;border-top:1px solid var(--line)}
+.step-number{color:var(--cyan);font:700 11px ui-monospace;margin-bottom:25px}
+.step h3{font:700 19px "Space Grotesk";margin:0 0 9px}.step p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
+
+.tech-strip{display:flex;gap:9px;flex-wrap:wrap;margin-top:28px}
+.tech{
+  padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:rgba(255,255,255,.025);color:#9db3c8;font-size:10px;font-weight:700;
+}
+
+.contact-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px}
+.contact-info{display:grid;gap:11px}
+.contact-item{padding:19px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.018)}
+.contact-item small{display:block;color:#657d94;text-transform:uppercase;letter-spacing:.13em;font-size:9px;margin-bottom:6px}
+.contact-item strong{font-size:13px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+.field label{font-size:10px;color:#8298ad;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.field input,.field textarea,.field select{
+  width:100%;border:1px solid var(--line);border-radius:13px;padding:13px 14px;
+  background:#07111f;color:white;outline:none;transition:.2s;
+}
+.field textarea{min-height:130px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:rgba(57,217,255,.6);box-shadow:0 0 0 3px rgba(57,217,255,.08)
+}
+
+/* ===== BOOK / TECH CHECK-IN ===== */
+.book-shell{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:22px;
+  align-items:start;
+}
+.book-intro{
+  position:relative;
+  overflow:hidden;
+  min-height:100%;
+}
+.book-intro::after{
+  content:"";
+  position:absolute;
+  width:240px;height:240px;border-radius:50%;
+  right:-100px;bottom:-110px;
+  background:radial-gradient(circle,rgba(57,217,255,.16),transparent 68%);
+  pointer-events:none;
+}
+.book-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 10px;border-radius:999px;
+  border:1px solid rgba(68,227,161,.2);
+  color:var(--green);background:rgba(68,227,161,.05);
+  font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+}
+.book-intro h3{
+  font:700 clamp(25px,3vw,38px)/1.05 "Space Grotesk";
+  letter-spacing:-.045em;margin:18px 0 12px;
+}
+.book-intro p{color:var(--muted);font-size:13px;line-height:1.75}
+.check-progress{
+  display:flex;gap:7px;margin:24px 0 4px;
+}
+.check-progress span{
+  height:4px;flex:1;border-radius:999px;background:rgba(255,255,255,.07);
+  transition:.25s;
+}
+.check-progress span.active{background:var(--cyan);box-shadow:0 0 12px rgba(57,217,255,.35)}
+.book-form{
+  display:grid;gap:17px;
+}
+.book-step{display:none}
+.book-step.active{display:block;animation:bookIn .28s ease}
+@keyframes bookIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-label{
+  display:flex;justify-content:space-between;gap:15px;align-items:center;
+  margin-bottom:12px;
+}
+.step-label strong{font:700 17px "Space Grotesk"}
+.step-label span{font:700 9px;color:#668099;letter-spacing:.12em;text-transform:uppercase}
+.issue-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;
+  align-items:stretch;
+}
+.issue-bubble{
+  width:100%;min-width:0;box-sizing:border-box;
+  border:1px solid var(--line);border-radius:15px;padding:13px;
+  background:rgba(255,255,255,.018);color:#b9cadb;
+  text-align:left;transition:.2s ease;position:relative;overflow:hidden;
+}
+.issue-bubble:hover{
+  transform:translateY(-2px);border-color:rgba(57,217,255,.42);
+  background:rgba(57,217,255,.055);
+}
+.issue-bubble.selected{
+  color:#fff;border-color:rgba(57,217,255,.7);
+  background:linear-gradient(135deg,rgba(57,217,255,.13),rgba(75,124,255,.08));
+  box-shadow:0 0 0 1px rgba(57,217,255,.1),0 10px 25px rgba(0,0,0,.18);
+}
+.issue-bubble .bubble-icon{font-size:18px;display:block;margin-bottom:6px}
+.issue-bubble strong{display:block;font-size:11px}
+.issue-bubble small{display:block;color:#70879d;font-size:9px;line-height:1.45;margin-top:4px}
+.issue-bubble.selected small{color:#9fc3dc}
+.quick-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.quick-pill{
+  border:1px solid var(--line);background:rgba(255,255,255,.02);
+  color:#8fa5ba;border-radius:999px;padding:7px 10px;font-size:9px;font-weight:700;
+  transition:.2s;
+}
+.quick-pill:hover,.quick-pill.selected{color:#fff;border-color:rgba(155,108,255,.5);background:rgba(155,108,255,.1)}
+.book-summary{
+  border:1px solid rgba(68,227,161,.18);border-radius:17px;
+  background:rgba(68,227,161,.035);padding:15px;
+}
+.book-summary-title{
+  font-size:9px;color:var(--green);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;
+}
+.summary-line{
+  display:flex;justify-content:space-between;gap:15px;padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.055);font-size:11px;
+}
+.summary-line:last-child{border-bottom:0}
+.summary-line span{color:#71889e}.summary-line strong{text-align:right;color:#dcecf8}
+.book-nav{
+  display:flex;justify-content:space-between;gap:10px;margin-top:4px;
+}
+.book-nav .btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+/* ===== FRIENDLY APPOINTMENT CALENDAR ===== */
+.appointment-picker{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:10px;
+  margin-top:2px;
+}
+.appointment-date-panel,.appointment-time-panel{
+  border:1px solid var(--line);border-radius:18px;
+  background:rgba(4,14,25,.72);padding:15px;
+}
+.picker-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}
+.picker-heading strong{font:700 12px "Space Grotesk"}
+.picker-heading span{color:#637c93;font-size:9px;text-align:right}
+.calendar-header{
+  display:grid;grid-template-columns:34px 1fr 34px;align-items:center;
+  text-align:center;margin-bottom:10px;
+}
+.calendar-header strong{font:700 12px "Space Grotesk"}
+.calendar-arrow{
+  width:32px;height:32px;border-radius:9px;border:1px solid var(--line);
+  background:rgba(255,255,255,.025);color:#bdd1e2;font-size:20px;line-height:1;
+}
+.calendar-arrow:hover{border-color:rgba(57,217,255,.45);color:#fff;background:rgba(57,217,255,.07)}
+.calendar-weekdays,.calendar-days{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
+}
+.calendar-weekdays span{
+  text-align:center;color:#587087;font-size:8px;font-weight:800;text-transform:uppercase;
+  padding:5px 0;
+}
+.calendar-day{
+  aspect-ratio:1;border:1px solid transparent;border-radius:9px;
+  background:rgba(255,255,255,.018);color:#a8bbcc;font-size:10px;font-weight:700;
+  transition:.18s;
+}
+.calendar-day:hover:not(:disabled){border-color:rgba(57,217,255,.45);background:rgba(57,217,255,.07);color:#fff}
+.calendar-day.muted{opacity:.25}
+.calendar-day.today{border-color:rgba(57,217,255,.35);color:var(--cyan)}
+.calendar-day.selected{
+  background:linear-gradient(135deg,var(--cyan),#6f9cff);color:#03111a;
+  border-color:transparent;box-shadow:0 5px 16px rgba(57,217,255,.18);
+}
+.calendar-day:disabled{cursor:not-allowed;opacity:.18}
+.time-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:7px;
+  max-height:250px;overflow:auto;padding-right:2px;
+}
+.time-choice{
+  border:1px solid var(--line);border-radius:10px;padding:9px 5px;
+  background:rgba(255,255,255,.018);color:#9fb3c5;font-size:9px;font-weight:700;
+}
+.time-choice:hover{border-color:rgba(57,217,255,.42);color:#fff;background:rgba(57,217,255,.06)}
+.time-choice.selected{color:#03111a;background:linear-gradient(135deg,var(--cyan),#73b1ff);border-color:transparent}
+.custom-time{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+.custom-time label{display:block;color:#6e8499;font-size:8px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px}
+.custom-time input{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;
+  background:#07111f;color:#fff;outline:none;
+}
+.custom-time input:focus{border-color:rgba(57,217,255,.55);box-shadow:0 0 0 3px rgba(57,217,255,.07)}
+
+.booking-confirm{
+  display:none;text-align:center;padding:25px 10px;
+}
+.booking-confirm.show{display:block;animation:bookIn .3s ease}
+.confirm-icon{
+  width:62px;height:62px;border-radius:50%;display:grid;place-items:center;margin:0 auto 15px;
+  color:var(--green);border:1px solid rgba(68,227,161,.3);background:rgba(68,227,161,.08);
+  font-size:27px;box-shadow:0 0 30px rgba(68,227,161,.08);
+}
+.booking-confirm h3{font:700 25px "Space Grotesk";margin:0 0 8px}
+.booking-confirm p{color:var(--muted);font-size:12px;line-height:1.7;margin:0 auto 18px;max-width:430px}
+
+/* ===== FLOATING BOOK BUTTON ===== */
+.floating-book{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:75;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(57,217,255,.45);
+  border-radius:999px;
+  padding:10px 16px 10px 11px;
+  color:#03111a;
+  background:linear-gradient(100deg,var(--cyan),#75b5ff);
+  box-shadow:0 12px 35px rgba(0,0,0,.4),0 0 28px rgba(57,217,255,.16);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.01em;
+  transition:transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+.floating-book:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 18px 42px rgba(0,0,0,.46),0 0 36px rgba(57,217,255,.3);
+  filter:brightness(1.05);
+}
+.floating-book:active{transform:translateY(-1px) scale(.99)}
+.floating-book-icon{
+  width:31px;height:31px;border-radius:50%;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.42);
+  font-size:16px;
+}
+.floating-book-label{white-space:nowrap}
+.floating-book-pulse{
+  position:absolute;inset:-5px;border:1px solid rgba(57,217,255,.3);
+  border-radius:999px;animation:bookPulse 2.3s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes bookPulse{
+  0%{transform:scale(.98);opacity:.8}
+  70%,100%{transform:scale(1.14);opacity:0}
+}
+@media(max-width:900px){
+  .issue-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:760px){
+  .issue-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .floating-book{
+    right:15px;bottom:15px;
+    padding:9px 12px 9px 9px;
+  }
+  .floating-book-icon{width:30px;height:30px}
+  .floating-book-label{font-size:11px}
+}
+
+.footer{
+  padding:26px 5vw 38px;border-top:1px solid var(--line);color:#657b90;font-size:10px;
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.footer strong{color:#a8bfd4}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.show{opacity:1;transform:none}
+.toast{
+  position:fixed;right:20px;bottom:20px;z-index:100;
+  padding:13px 16px;border-radius:13px;background:#0c1b2b;border:1px solid rgba(57,217,255,.3);
+  box-shadow:var(--shadow);font-size:12px;opacity:0;transform:translateY(15px);pointer-events:none;transition:.25s;
+}
+.toast.show{opacity:1;transform:none}
+
+@media(max-width:1050px){
+  :root{--nav-width:205px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .split,.contact-wrap,.book-shell{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .app{display:block}
+  main{padding-top:52px}
+  .section{padding:75px 18px;min-height:auto}
+  .hero{min-height:calc(100vh - 64px);padding-top:85px;padding-bottom:65px}
+  .hero h1{font-size:clamp(40px,12vw,67px)}
+  .hero-copy{font-size:14px}
+  .hero-metrics{grid-template-columns:1fr 1fr 1fr;gap:3px}
+  .metric{padding:10px 8px}.metric strong{font-size:20px}.metric span{font-size:8px}
+  .section-head{display:block}.section-intro{margin-top:13px}
+  .services-grid,.process-grid{grid-template-columns:1fr}
+  .about-points{grid-template-columns:1fr}
+  .vision{padding:30px 24px}.vision-mark{display:none}
+  .form{grid-template-columns:1fr}.field.full{grid-column:auto}
+  .appointment-picker{grid-template-columns:1fr}
+  .time-grid{grid-template-columns:repeat(3,1fr);max-height:none}
+  .footer{padding-left:18px;padding-right:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+
+/* ===== THEME SYSTEM — RECODED ===== */
+.theme-toggle{
+  position:fixed;
+  top:14px;
+  right:20px;
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:5px;
+  border:1px solid rgba(57,217,255,.35);
+  border-radius:999px;
+  background:rgba(8,16,27,.94);
+  box-shadow:0 8px 25px rgba(0,0,0,.32),0 0 22px rgba(57,217,255,.10);
+  backdrop-filter:blur(12px);
+}
+.theme-label{
+  padding:0 5px 0 7px;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+.theme-toggle button{
+  appearance:none;
+  border:0;
+  border-radius:999px;
+  padding:7px 10px;
+  background:transparent;
+  color:var(--muted);
+  font:inherit;
+  font-size:11px;
+  font-weight:800;
+  line-height:1;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.theme-toggle button:hover{transform:translateY(-1px)}
+.theme-toggle button:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:2px;
+}
+.theme-toggle button.active{
+  color:#06131b;
+  background:var(--cyan);
+  box-shadow:0 0 18px rgba(57,217,255,.18);
+}
+
+/* Light theme is controlled by one class only: body.light-mode */
+body.light-mode{
+  --bg:#f5f8fb;
+  --bg2:#edf3f7;
+  --panel:rgba(255,255,255,.88);
+  --panel-solid:#ffffff;
+  --line:rgba(20,33,43,.12);
+  --text:#172630;
+  --muted:#536574;
+  --cyan:#087ea5;
+  --blue:#3977d5;
+  --violet:#7654c8;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(57,119,213,.10),transparent 28%),
+    radial-gradient(circle at 85% 15%,rgba(8,126,165,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+}
+body.light-mode::before{
+  background-image:
+    linear-gradient(rgba(20,33,43,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,33,43,.035) 1px,transparent 1px);
+}
+body.light-mode .mobile-nav-top{
+  background:rgba(255,255,255,.96);
+  border-bottom-color:rgba(20,33,43,.10);
+}
+body.light-mode .mobile-nav-top a{color:#536574}
+body.light-mode .mobile-nav-top a:hover,
+body.light-mode .mobile-nav-top a:active{
+  color:#14212b;
+  background:rgba(8,126,165,.08);
+}
+body.light-mode .sidebar,
+body.light-mode header,
+body.light-mode .card,
+body.light-mode .panel,
+body.light-mode .hero-card,
+body.light-mode .service-card,
+body.light-mode .process-card{
+  background-color:rgba(255,255,255,.88);
+  border-color:rgba(20,33,43,.10);
+}
+body.light-mode .sidebar{box-shadow:8px 0 30px rgba(20,33,43,.07)}
+body.light-mode .nav a{color:#536574}
+body.light-mode .nav a:hover,
+body.light-mode .nav a.active{
+  color:#14212b;
+  background:rgba(8,126,165,.08);
+}
+body.light-mode .nav a.active{box-shadow:inset 3px 0 0 var(--cyan)}
+body.light-mode .eyebrow,
+body.light-mode .section-kicker{color:#087ea5}
+body.light-mode .process-kicker{
+  color:#087ea5;
+  border-color:rgba(8,126,165,.24);
+  background:rgba(8,126,165,.07);
+  box-shadow:0 0 18px rgba(8,126,165,.06);
+}
+body.light-mode .floating-book{
+  color:#fff;
+  background:linear-gradient(100deg,#087ea5,#3977d5);
+}
+body.light-mode .floating-book-pulse{border-color:rgba(8,126,165,.25)}
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select{
+  color:var(--text);
+  background:#fff;
+  border-color:rgba(20,33,43,.14);
+}
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder{color:#71808b;opacity:1}
+body.light-mode .terminal,
+body.light-mode .code-panel,
+body.light-mode pre,
+body.light-mode code{
+  background:#edf3f7;
+  color:#24343f;
+  border-color:rgba(20,33,43,.10);
+}
+body.light-mode footer{color:#536574}
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode p,
+body.light-mode li,
+body.light-mode label,
+body.light-mode strong{color:inherit}
+body.light-mode .hero h1,
+body.light-mode .section-title,
+body.light-mode .card-title,
+body.light-mode .service-title,
+body.light-mode .process-title,
+body.light-mode .hero-card h3,
+body.light-mode .panel h3{color:#14212b}
+body.light-mode .muted,
+body.light-mode .sub,
+body.light-mode .description,
+body.light-mode .small{color:#536574}
+body.light-mode a{color:#087ea5}
+body.light-mode button:not(.theme-toggle button){color:#14212b}
+body.light-mode .service-card *,
+body.light-mode .process-card *,
+body.light-mode .card *,
+body.light-mode .panel *{color:inherit}
+
+body.light-mode .theme-toggle{
+  background:rgba(255,255,255,.96);
+  border-color:rgba(20,33,43,.14);
+  box-shadow:0 8px 25px rgba(20,33,43,.12);
+}
+body.light-mode .theme-toggle button.active{
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 0 16px rgba(57,119,213,.18);
+}
+
+@media(max-width:760px){
+  .theme-toggle{top:10px;right:10px}
+  .theme-label{display:none}
+}
+</style>
+
+<style id="nav-title-alignment">
+html { scroll-behavior: smooth; }
+/* Keep section titles aligned beneath the fixed top navigation */
+section[id] { scroll-margin-top: 92px; }
+@media (max-width: 700px) { section[id] { scroll-margin-top: 78px; } }
+</style>
+
+<style id="v39-title-spacing">
+/* V39: add breathing room directly beneath the hero title */
+.hero-title-spacing{height:18px;}
+@media (max-width:700px){.hero-title-spacing{height:14px;}}
+
+/* Compact About section spacing */
+#about{
+  min-height:auto !important;
+  justify-content:flex-start !important;
+  padding-top:55px !important;
+  padding-bottom:70px !important;
+}
+@media(max-width:760px){
+  #about{
+    padding-top:38px !important;
+    padding-bottom:55px !important;
+  }
+}
+</style>
+
+<style id="techunify-text-logo">
+.techunify-text-logo{
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  white-space: nowrap;
+  margin: 0 0 18px;
+  text-align: center;
+  text-shadow: 0 0 18px rgba(0, 190, 255, .22);
+}
+.techunify-text-logo .tu-tech{color:#eef7ff;}
+.techunify-text-logo .tu-unify{
+  background:linear-gradient(90deg,#27c9ff,#5b8cff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+@media (max-width:700px){
+  .techunify-text-logo{font-size:1.7rem;margin-bottom:10px;}
+}
+
+<style id="techunify-text-logo">
+.techunify-text-logo{
+  display:block;
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 20px;
+  padding:0;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  font-size:clamp(1.65rem,3vw,2.25rem);
+  font-weight:850;
+  letter-spacing:-.055em;
+  line-height:1;
+  white-space:nowrap;
+  text-align:center;
+  text-shadow:0 0 18px rgba(0,190,255,.24);
+}
+.techunify-text-logo .tu-tech{
+  color:#edf7ff;
+}
+.techunify-text-logo .tu-unify{
+  background:linear-gradient(90deg,#24c9ff,#5b8cff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+@media(max-width:700px){
+  .techunify-text-logo{
+    font-size:1.75rem;
+    margin-bottom:12px;
+  }
+}
+</style>
+
+<style id="layout-cleanup-v46">
+.sidebar,.mobile-top,.menu-btn{display:none !important;}
+body{margin-left:0 !important;}
+main{margin-left:0 !important;width:100% !important;padding-top:52px !important;}
+.mobile-nav-top{display:flex !important;}
+</style>
+
+<style id="home-sales-v47">
+.home-sales{
+  padding-top:20px!important;
+  padding-bottom:55px!important;
+}
+.home-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  gap:34px;
+  align-items:start;
+}
+.home-kicker{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 14px;
+  border:1px solid rgba(55,205,255,.35);
+  border-radius:999px;
+  color:#58d9ff;
+  background:rgba(25,160,220,.09);
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  margin-bottom:16px;
+}
+.home-copy h1{
+  margin:0;
+  font-size:clamp(3rem,7vw,6.5rem);
+  line-height:.92;
+  letter-spacing:-.065em;
+}
+.home-copy h1 span{
+  background:linear-gradient(90deg,#fff,#42d8ff,#5e8dff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.home-short{
+  max-width:610px;
+  margin:22px 0 18px;
+  font-size:1.08rem;
+  line-height:1.55;
+}
+.home-bubbles,.home-service-bubbles{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+.home-bubble,.home-service-bubbles a{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:10px 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--glass);
+  color:inherit;
+  text-decoration:none;
+  font-size:.86rem;
+  font-weight:700;
+  transition:.2s ease;
+}
+.home-bubble:hover,.home-service-bubbles a:hover{
+  transform:translateY(-2px);
+  border-color:#37cfff;
+  box-shadow:0 8px 24px rgba(0,190,255,.14);
+}
+.home-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:23px}
+.promo-flyer{
+  margin-top:34px;
+  position:relative;
+  padding:28px 24px 24px;
+  border-radius:22px;
+  overflow:hidden;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(50,220,255,.22),transparent 48%),
+    linear-gradient(145deg,rgba(12,32,52,.98),rgba(8,15,28,.98));
+  border:1px solid rgba(65,210,255,.45);
+  box-shadow:0 20px 55px rgba(0,0,0,.32),0 0 35px rgba(0,190,255,.12);
+  transform:rotate(1.2deg);
+}
+.promo-flyer:before{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border:1px dashed rgba(100,220,255,.35);
+  border-radius:16px;
+  pointer-events:none;
+}
+.promo-top{
+  position:relative;
+  font-size:.75rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  color:#55dcff;
+}
+.promo-big{
+  position:relative;
+  margin:9px 0 0;
+  font-size:clamp(3.6rem,7vw,5.8rem);
+  line-height:.9;
+  font-weight:950;
+  letter-spacing:-.08em;
+  background:linear-gradient(180deg,#fff,#45d9ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.promo-line{position:relative;margin-top:12px;font-weight:800;font-size:1rem}
+.promo-code{
+  position:relative;
+  display:inline-block;
+  margin:17px 0 13px;
+  padding:9px 13px;
+  border-radius:9px;
+  background:rgba(0,0,0,.28);
+  border:1px dashed rgba(255,255,255,.3);
+  font-size:.78rem;
+  letter-spacing:.08em;
+}
+.promo-code strong{color:#55dcff}
+.promo-note{position:relative;font-size:.72rem;opacity:.72}
+.promo-cta{
+  position:relative;
+  display:block;
+  margin:18px auto 0;
+  width:fit-content;
+  padding:11px 17px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#20c9ff,#547cff);
+  color:#04101a!important;
+  text-decoration:none;
+  font-size:.75rem;
+  font-weight:950;
+  letter-spacing:.04em;
+}
+.home-trust-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:42px 0 35px;
+}
+.home-trust-strip div{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--glass);
+  font-size:.82rem;
+  font-weight:700;
+}
+.home-trust-strip strong{color:#39d9ff}
+.home-mini-title{
+  margin:0 0 12px;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  color:#53d8ff;
+}
+.home-service-bubbles a{padding:12px 15px}
+@media(max-width:820px){
+  .home-hero-grid{grid-template-columns:1fr}
+  .promo-flyer{max-width:430px;width:100%;margin:5px auto 0}
+  .home-trust-strip{grid-template-columns:repeat(2,1fr);margin-top:34px}
+}
+@media(max-width:560px){
+  .home-sales{padding-top:62px!important}
+  .home-copy h1{font-size:clamp(2.8rem,15vw,4.4rem)}
+  .home-short{font-size:.98rem}
+  .home-trust-strip{grid-template-columns:1fr 1fr}
+  .home-trust-strip div{font-size:.74rem}
+  .home-bubble,.home-service-bubbles a{font-size:.78rem;padding:9px 11px}
+  .promo-flyer{transform:none}
+}
+body.light-mode .promo-flyer{
+  background:linear-gradient(145deg,#f5fbff,#fff);
+  border-color:rgba(0,150,210,.3);
+  box-shadow:0 18px 45px rgba(0,90,130,.13);
+}
+body.light-mode .home-bubble,
+body.light-mode .home-service-bubbles a,
+body.light-mode .home-trust-strip div{
+  background:#fff;
+  color:#152334;
+}
+</style>
+
+<style id="section-spacing-v49">
+/* Tighter overall section spacing */
+.section{
+  padding-top:38px !important;
+  padding-bottom:38px !important;
+}
+section + section{
+  margin-top:0 !important;
+}
+.section > .section-head{
+  margin-bottom:18px !important;
+}
+.hero{
+  padding-top:55px !important;
+  padding-bottom:38px !important;
+}
+#about,#services,#contact,#book{
+  padding-top:38px !important;
+  padding-bottom:38px !important;
+}
+</style>
+
+<style id="v50-section-gap-fix">
+/* Remove excessive gap between Services and Contact */
+#services{
+  margin-bottom:0 !important;
+  padding-bottom:22px !important;
+}
+#contact{
+  margin-top:0 !important;
+  padding-top:22px !important;
+}
+#services + #contact{
+  margin-top:0 !important;
+}
+#services + #contact::before{
+  display:none !important;
+}
+</style>
+
+<style id="v51-about-spacing">
+/* Reduce the space above About the Company */
+#about{
+  margin-top:0 !important;
+  padding-top:18px !important;
+}
+#home + #about{
+  margin-top:0 !important;
+}
+</style>
+
+<style id="v52-desktop-nav-fix">
+/* Desktop top navigation: give every item room and keep theme control inside viewport */
+.mobile-nav-top{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  height:58px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:6px !important;
+  padding:7px 150px 7px 20px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  white-space:nowrap !important;
+  scrollbar-width:none !important;
+  z-index:9998 !important;
+}
+.mobile-nav-top::-webkit-scrollbar{display:none !important;}
+.mobile-nav-top a{
+  flex:0 0 auto !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-width:max-content !important;
+  padding:9px 15px !important;
+  line-height:1 !important;
+}
+.theme-toggle{
+  position:fixed !important;
+  top:10px !important;
+  right:18px !important;
+  z-index:10000 !important;
+  flex:0 0 auto !important;
+}
+
+/* Keep the page clear of the fixed top bar */
+main{
+  padding-top:58px !important;
+}
+
+/* Desktop: don't squeeze the navigation into a tiny centered area */
+@media(min-width:821px){
+  .mobile-nav-top{
+    justify-content:flex-start !important;
+    padding-left:28px !important;
+    padding-right:135px !important;
+  }
+}
+
+/* Mobile remains compact and scrollable */
+@media(max-width:820px){
+  .mobile-nav-top{
+    height:52px !important;
+    justify-content:flex-start !important;
+    padding:5px 10px !important;
+    gap:5px !important;
+  }
+  .mobile-nav-top a{
+    padding:9px 12px !important;
+    font-size:.82rem !important;
+  }
+  .theme-toggle{
+    top:9px !important;
+    right:10px !important;
+  }
+  main{padding-top:52px !important;}
+}
+</style>
+
+<style id="v53-what-we-do-spacing">
+/* Reduce the space above What We Do */
+#services{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+#about + #services{
+  margin-top:0 !important;
+}
+</style>
+<style id="v54-contact-spacing">
+/* Add a little breathing room above Let's Connect */
+#contact{
+  padding-top:30px !important;
+}
+</style>
+
+<style id="theme-white-final-fix">
+/* V87: definitive white Light Mode */
+body.light-mode,
+body.light-mode main,
+body.light-mode .app{
+  background:#ffffff !important;
+  color:#172630 !important;
+}
+body.light-mode::before{display:none !important;}
+body.light-mode .mobile-nav-top,
+body.light-mode header,
+body.light-mode .sidebar,
+body.light-mode .card,
+body.light-mode .panel,
+body.light-mode .hero-card,
+body.light-mode .service-card,
+body.light-mode .process-card,
+body.light-mode .status-card,
+body.light-mode .contact-item,
+body.light-mode .home-trust-strip div,
+body.light-mode .home-bubble,
+body.light-mode .home-service-bubbles a{
+  background:#ffffff !important;
+  color:#172630 !important;
+  border-color:rgba(20,33,43,.12) !important;
+  box-shadow:0 8px 28px rgba(20,33,43,.06);
+}
+body.light-mode .home-sales,
+body.light-mode .section,
+body.light-mode .hero{
+  background:#ffffff !important;
+}
+body.light-mode .mobile-nav-top a,
+body.light-mode .nav a{color:#536574 !important;}
+body.light-mode .mobile-nav-top a:hover,
+body.light-mode .mobile-nav-top a:active,
+body.light-mode .nav a:hover,
+body.light-mode .nav a.active{color:#14212b !important;background:#f1f7fa !important;}
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode p,
+body.light-mode li,
+body.light-mode label,
+body.light-mode strong,
+body.light-mode .home-copy h1,
+body.light-mode .section-title,
+body.light-mode .card-title,
+body.light-mode .service-title,
+body.light-mode .process-title{color:#172630 !important;}
+body.light-mode .home-copy h1 span{
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  background-clip:initial !important;
+  color:#172630 !important;
+}
+body.light-mode .techunify-text-logo .tu-tech{color:#172630 !important;}
+body.light-mode .techunify-text-logo .tu-unify{
+  background:linear-gradient(90deg,#087ea5,#3977d5) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  color:transparent !important;
+}
+body.light-mode .home-kicker,
+body.light-mode .kicker,
+body.light-mode .home-mini-title{color:#087ea5 !important;}
+body.light-mode .promo-flyer{
+  background:#ffffff !important;
+  color:#172630 !important;
+  border-color:rgba(8,126,165,.28) !important;
+}
+body.light-mode .promo-big{
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  background-clip:initial !important;
+  color:#087ea5 !important;
+}
+body.light-mode .promo-line,
+body.light-mode .promo-note{color:#172630 !important;}
+body.light-mode .promo-code{background:#f4f8fa !important;color:#172630 !important;border-color:rgba(20,33,43,.16) !important;}
+body.light-mode .promo-code strong{color:#087ea5 !important;}
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select{background:#ffffff !important;color:#172630 !important;border-color:rgba(20,33,43,.16) !important;}
+body.light-mode .terminal,
+body.light-mode .code-panel,
+body.light-mode pre,
+body.light-mode code{background:#f4f8fa !important;color:#24343f !important;}
+body.light-mode .theme-toggle{background:#ffffff !important;color:#172630 !important;border-color:rgba(20,33,43,.14) !important;}
+body.light-mode .theme-toggle button{color:#536574 !important;}
+body.light-mode .theme-toggle button.active{background:#3977d5 !important;color:#ffffff !important;}
+body.light-mode .floating-book{background:linear-gradient(100deg,#087ea5,#3977d5) !important;color:#ffffff !important;}
+</style>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<div class="app">
+<nav class="mobile-nav-top" aria-label="Primary navigation">
+    <a href="#home">Home</a>
+    <a href="#book">Book</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    
+    
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    
+<section id="home" class="section hero home-sales">
+  <div class="home-hero-grid">
+    <div class="home-copy">
+      <div class="home-kicker">TECH HELP • REPAIRS • BUILDS</div>
+      <h1>Need tech fixed?<br><span>We’ve got you.</span></h1>
+      <p class="home-short">Computer problems. Wi-Fi issues. Slow devices. Websites. We fix it.</p>
+
+      <div class="home-bubbles">
+        
+        
+        
+        
+      </div>
+
+      
+    </div>
+
+
+  </div>
+
+  <div class="home-trust-strip">
+    <div><strong>✓</strong><span>Straight answers</span></div>
+    <div><strong>✓</strong><span>No tech jargon</span></div>
+    <div><strong>✓</strong><span>Practical fixes</span></div>
+    <div><strong>✓</strong><span>Personal service</span></div>
+  </div>
+
+  <div class="home-mini-title">WHAT CAN WE FIX?</div>
+  <div class="home-service-bubbles">
+    <a>🖥️ Computers</a>
+    <a>💾 Data &amp; Software</a>
+    <a>📡 Internet &amp; Wi-Fi</a>
+    <a>🖨️ Printers &amp; Devices</a>
+    <a>🛠️ Website Problems</a>
+    <a>❓ Not Sure? Ask Us</a>
+  </div>
+</section>
+
+
+    <!-- BOOK -->
+    <section class="section" id="book">
+      <div class="section-head reveal">
+        <div>
+          <div class="kicker">Service check-in</div>
+          <h2 class="section-title">Tell us what's going wrong.</h2>
+        </div>
+        <p class="section-intro">
+        </p>
+      </div>
+
+      <div class="book-shell reveal">
+        <article class="card">
+          <form class="book-form" id="bookingForm">
+            <div class="book-step active" data-step="1">
+              <div class="step-label">
+                <strong>What kind of help do you need?</strong><span>Step 1 of 3</span>
+              </div>
+              <div class="issue-grid" id="issueChoices">
+                <button type="button" class="issue-bubble" data-issue="Computer / Laptop">
+                  <span class="bubble-icon">💻</span><strong>Computer / Laptop</strong>
+                  <small>Slow, broken, won't start, overheating</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Website">
+                  <span class="bubble-icon">🌐</span><strong>Website</strong>
+                  <small>Need a new site, changes or troubleshooting</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Software">
+                  <span class="bubble-icon">⚙</span><strong>Software</strong>
+                  <small>Install, update, error or configuration issue</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Internet / Wi-Fi">
+                  <span class="bubble-icon">📶</span><strong>Internet / Wi-Fi</strong>
+                  <small>Slow, disconnected or difficult to connect</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Printer / Device">
+                  <span class="bubble-icon">🖨</span><strong>Printer / Device</strong>
+                  <small>Can't print, connect or recognize a device</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Consultation">
+                  <span class="bubble-icon">💬</span><strong>Consultation</strong>
+                  <small>Talk through a technology need or project</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Training">
+                  <span class="bubble-icon">🎓</span><strong>Training</strong>
+                  <small>Learn how to use your technology with confidence</small>
+                </button>
+                <button type="button" class="issue-bubble" data-issue="Other technology">
+                  <span class="bubble-icon">🧩</span><strong>Something else</strong>
+                  <small>I'm not sure what category it falls into</small>
+                </button>
+              </div>
+            </div>
+
+            <div class="book-step" data-step="2">
+              <div class="step-label">
+                <strong>What are you experiencing?</strong><span>Step 2 of 3</span>
+              </div>
+              <div class="issue-grid" id="symptomChoices">
+                <button type="button" class="issue-bubble" data-symptom="It is slow">
+                  <span class="bubble-icon">🐢</span><strong>It's really slow</strong><small>Everything takes longer than it should</small>
+                </button>
+                <button type="button" class="issue-bubble" data-symptom="It won't turn on">
+                  <span class="bubble-icon">🔌</span><strong>It won't turn on</strong><small>No power, startup or boot issue</small>
+                </button>
+                <button type="button" class="issue-bubble" data-symptom="I keep getting errors">
+                  <span class="bubble-icon">⚠</span><strong>I keep getting errors</strong><small>Messages, crashes or unexpected behavior</small>
+                </button>
+                <button type="button" class="issue-bubble" data-symptom="It won't connect">
+                  <span class="bubble-icon">📡</span><strong>It won't connect</strong><small>Internet, Wi-Fi, Bluetooth or device connection</small>
+                </button>
+                <button type="button" class="issue-bubble" data-symptom="I need help setting it up">
+                  <span class="bubble-icon">🛠</span><strong>I need help setting it up</strong><small>New device, software or account setup</small>
+                </button>
+                <button type="button" class="issue-bubble" data-symptom="I need something built">
+                  <span class="bubble-icon">✨</span><strong>I need something built</strong><small>Website, system or digital project</small>
+                </button>
+              </div>
+              <div class="quick-pills">
+                <button type="button" class="quick-pill" data-extra="It started recently">Started recently</button>
+                <button type="button" class="quick-pill" data-extra="It happens randomly">Happens randomly</button>
+                <button type="button" class="quick-pill" data-extra="It happens every time">Happens every time</button>
+                <button type="button" class="quick-pill" data-extra="I have already tried restarting it">Already tried restarting</button>
+              </div>
+            </div>
+
+            <div class="book-step" data-step="3">
+              <div class="step-label">
+                <strong>How urgent is this?</strong><span>Step 3 of 3</span>
+              </div>
+              <div class="issue-grid" id="urgencyChoices">
+                <button type="button" class="issue-bubble" data-urgency="Whenever convenient">
+                  <span class="bubble-icon">🌿</span><strong>Whenever convenient</strong><small>It's not preventing me from working</small>
+                </button>
+                <button type="button" class="issue-bubble" data-urgency="Soon">
+                  <span class="bubble-icon">⏱</span><strong>Soon</strong><small>I'd like to get it resolved in the next few days</small>
+                </button>
+                <button type="button" class="issue-bubble" data-urgency="Priority">
+                  <span class="bubble-icon">🚨</span><strong>Priority</strong><small>This is disrupting important work</small>
+                </button>
+                <button type="button" class="issue-bubble" data-urgency="I'm not sure">
+                  <span class="bubble-icon">❔</span><strong>I'm not sure</strong><small>I'd like the technician to advise me</small>
+                </button>
+              </div>
+            </div>
+
+            <div class="book-step" data-step="4">
+              <div class="step-label">
+                <strong>Finish your service request</strong><span>Ready to book</span>
+              </div>
+              <div class="form">
+                <div class="field"><label for="bookName">Name</label><input id="bookName" required placeholder="Your name"></div>
+                <div class="field"><label for="bookEmail">Email</label><input id="bookEmail" type="email" required placeholder="you@example.com"></div>
+                <div class="field full">
+                  <label>Preferred appointment</label>
+                  <div class="appointment-picker" id="appointmentPicker">
+                    <div class="appointment-date-panel">
+                      <div class="picker-heading">
+                        <strong>Choose a date</strong>
+                        <span id="selectedDateLabel">Select a day</span>
+                      </div>
+                      <div class="calendar-header">
+
+
+
+                        <button class="calendar-arrow" type="button" id="prevMonth" aria-label="Previous month">‹</button>
+                        <strong id="calendarMonth"></strong>
+                        <button class="calendar-arrow" type="button" id="nextMonth" aria-label="Next month">›</button>
+                      </div>
+                      <div class="calendar-weekdays">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                      </div>
+                      <div class="calendar-days" id="calendarDays"></div>
+                    </div>
+                    <div class="appointment-time-panel">
+                      <div class="picker-heading">
+                        <strong>Choose a time</strong>
+                        <span id="selectedTimeLabel">Select a time</span>
+                      </div>
+                      <div class="time-grid" id="timeGrid"></div>
+                      <div class="custom-time">
+                        <label for="customTime">Or enter a time</label>
+                        <input id="customTime" type="time" aria-label="Custom appointment time">
+                      </div>
+                    </div>
+                  </div>
+                  <input id="bookDate" type="hidden" required>
+                </div>
+                <div class="field full"><label for="bookDetails">Anything else?</label><textarea id="bookDetails" placeholder="Add anything the bubbles didn't cover..."></textarea></div>
+              </div>
+            </div>
+
+            <div class="book-nav">
+              <button class="btn" type="button" id="bookBack" disabled>← Back</button>
+              <button class="btn btn-primary" type="button" id="bookNext">Continue →</button>
+            </div>
+          </form>
+
+          <div class="booking-confirm" id="bookingConfirm">
+            <div class="confirm-icon">✓</div>
+            <h3>Service request received.</h3>
+            <p id="confirmationText">Your appointment details have been captured in this prototype.</p>
+            <button class="btn" type="button" id="bookAgain">Start another request</button>
+          </div>
+        </article>
+
+
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="section-head reveal">
+        <div>
+          <div class="kicker">About the company</div>
+          <h2 class="section-title">Smart tech. Simple solutions.</h2>
+          <p class="section-intro">Our mission is simple: make technology easier to use, easier to understand, and more useful in everyday life.</p>
+        </div>
+      </div>
+
+      <div class="split reveal">
+        <article class="card about-panel">
+          <h3 class="trust-bubble">Who we are</h3>
+          <p>
+        I'm Tolga Duymayan, a technology professional with a passion for using technology to make everyday life easier. I enjoy helping people solve frustrating technology problems, build useful digital solutions, and feel more confident with the tools they rely on every day. My goal is simple: <strong>use technology to create a more comfortable, connected and productive life.</strong>
+      </p>
+          <div class="about-points">
+            <div class="point"><strong>Clear communication</strong><span>No confusing technical language when a simple explanation will do.</span></div>
+            <div class="point"><strong>Practical solutions</strong><span>Recommend what solves the problem — not what creates unnecessary complexity.</span></div>
+            <div class="point"><strong>Security-minded</strong><span>Build with sensible account, software and data-protection practices.</span></div>
+            <div class="point"><strong>Long-term support</strong><span>Technology is maintained, improved and supported after launch.</span></div>
+          </div>
+        </article>
+
+              </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="section-head reveal">
+        <div>
+          <div class="kicker">What we do</div>
+          <h2 class="section-title">Services built around real-world needs.</h2>
+        </div>
+      </div>
+
+      <div class="grid services-grid services-combined-grid">
+        <article class="card service-combined reveal">
+          <div class="service-icon">⌘</div>
+          <div class="service-combined-copy">
+            <h3>Web Design & Development</h3>
+            <p>New websites, updates, fixes and web applications. Clean, responsive and built to work.</p>
+            <span class="tag">Design • Build • Deploy</span>
+          </div>
+        </article>
+
+        <article class="card service-combined reveal">
+          <div class="service-icon">▣</div>
+          <div class="service-combined-copy">
+            <h3>Computer Repair & Setup</h3>
+            <p>Find the problem, replace what is needed, set things up and get your computer running properly again.</p>
+            <span class="tag">Hardware • Setup</span>
+          </div>
+        </article>
+
+        <article class="card service-combined reveal">
+          <div class="service-icon">⚙</div>
+          <div class="service-combined-copy">
+            <h3>Software Support & Optimization</h3>
+            <p>Install, update, configure and troubleshoot software, errors and performance problems.</p>
+            <span class="tag">Software • Optimization</span>
+          </div>
+        </article>
+
+        <article class="card service-combined reveal">
+          <div class="service-icon">⌁</div>
+          <div class="service-combined-copy">
+            <h3>Network, Wi-Fi & Connectivity</h3>
+            <p>Fix slow or unreliable Wi-Fi, connect devices and printers, and get your network working correctly.</p>
+            <span class="tag">Connectivity • Support</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- VISION -->
+    
+
+    <!-- PROCESS -->
+    
+
+    <!-- BOOK / TECH CHECK-IN -->
+    <section class="section" id="contact">
+      <div class="section-head reveal">
+        <div>
+          <div class="kicker">Let's connect</div>
+          <h2 class="section-title">Have a project? Need a technician?</h2>
+        </div>
+      </div>
+
+      <div class="contact-wrap reveal">
+        <div class="contact-info">
+          <div class="contact-item"><small>Service Area</small><strong>Local • Remote • By appointment</strong></div>
+          <div class="contact-item"><small>Email</small><strong>tolgatnt@gmail.com</strong></div>
+          <div class="contact-item"><small>Phone</small><strong>(818) 960 86 89</strong></div>
+          <div class="contact-item"><small>Hours</small><strong>Mon–Fri • 9:00 AM–6:00 PM</strong></div>
+        </div>
+
+        <form class="card form" id="contactForm">
+          <div class="field"><label for="name">Name</label><input id="name" required placeholder="Your name"></div>
+          <div class="field"><label for="email">Email</label><input id="email" type="email" required placeholder="you@example.com"></div>
+          <div class="field full"><label for="service">What do you need?</label>
+            <select id="service">
+              <option>Website design</option><option>Website development</option><option>Computer repair</option>
+              <option>Software support</option><option>Network / Wi-Fi</option><option>Technology consultation</option>
+            </select>
+          </div>
+          <div class="field full"><label for="message">Tell us about it</label><textarea id="message" required placeholder="Describe the project or technical issue..."></textarea></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Send Request →</button></div>
+        </form>
+      </div>
+    </section>
+
+
+
+    <footer class="footer">
+      <div>© <span id="year"></span> <strong>WeLoveTechnology</strong> — Digital + Technology Services</div>
+      <div>Prototype / Built with HTML • CSS • JavaScript • SVG</div>
+    </footer>
+  </main>
+</div>
+
+<!-- FLOATING BOOK ACTION -->
+<a class="floating-book" href="#book" id="floatingBook" aria-label="Book a technology service appointment">
+  <span class="floating-book-pulse"></span>
+  <span class="floating-book-icon">📅</span>
+  <span class="floating-book-label">Book a Service</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== COMPONENT HELPERS ===== */
+const $ = (s,root=document) => root.querySelector(s);
+const $$ = (s,root=document) => [...root.querySelectorAll(s)];
+
+/* ===== FLOATING BOOK ACTION ===== */
+$('#floatingBook')?.addEventListener('click',()=>{});
+
+/* ===== ACTIVE SECTION NAV ===== */
+const sections = $$('main section[id]');
+const navLinks = $$('.nav a');
+const sectionObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));
+    }
+  });
+},{rootMargin:'-35% 0px -55% 0px'});
+sections.forEach(s=>sectionObserver.observe(s));
+
+/* ===== REVEAL ANIMATION ===== */
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.08});
+$$('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ===== CARD LIGHT EFFECT ===== */
+$$('.card').forEach(card=>{
+  card.addEventListener('pointermove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',`${e.clientX-r.left}px`);
+    card.style.setProperty('--my',`${e.clientY-r.top}px`);
+  });
+});
+
+/* ===== CONTACT DEMO ===== */
+const form = $('#contactForm');
+const toast = $('#toast');
+function showToast(message){
+  toast.textContent=message;
+  toast.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
+}
+form?.addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('#name').value.trim() || 'there';
+  showToast(`Thanks, ${name}. Your service request is ready to connect to a real backend.`);
+  form.reset();
+});
+
+/* ===== INTERACTIVE APPOINTMENT CALENDAR ===== */
+(function(){
+  const calendarDays = $('#calendarDays');
+  const calendarMonth = $('#calendarMonth');
+  const selectedDateLabel = $('#selectedDateLabel');
+  const selectedTimeLabel = $('#selectedTimeLabel');
+  const timeGrid = $('#timeGrid');
+  const bookDate = $('#bookDate');
+  const customTime = $('#customTime');
+  if(!calendarDays || !timeGrid) return;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  let chosenDate = null;
+  let chosenTime = '';
+
+  const times = [];
+  for(let hour=9; hour<=17; hour++){
+    for(const minute of [0,30]){
+      if(hour===17 && minute===30) continue;
+      const h12 = hour>12 ? hour-12 : hour;
+      const suffix = hour>=12 ? 'PM' : 'AM';
+      times.push({
+        value:`${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`,
+        label:`${h12}:${String(minute).padStart(2,'0')} ${suffix}`
+      });
+    }
+  }
+
+  function formatDate(date){
+    return date.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+  }
+
+  function renderTimes(){
+    timeGrid.innerHTML = times.map(t =>
+      `<button type="button" class="time-choice ${chosenTime===t.value?'selected':''}" data-time="${t.value}">${t.label}</button>`
+    ).join('');
+
+    $$('.time-choice',timeGrid).forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        chosenTime=btn.dataset.time;
+        customTime.value='';
+        renderTimes();
+        updateValue();
+      });
+    });
+  }
+
+  function renderCalendar(){
+    const year=viewDate.getFullYear();
+    const month=viewDate.getMonth();
+    calendarMonth.textContent=viewDate.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+
+    const firstDay=new Date(year,month,1).getDay();
+    const daysInMonth=new Date(year,month+1,0).getDate();
+    const prevDays=new Date(year,month,0).getDate();
+
+    calendarDays.innerHTML='';
+
+    for(let i=0;i<firstDay;i++){
+      const d=document.createElement('button');
+      d.type='button'; d.className='calendar-day muted';
+      d.textContent=prevDays-firstDay+i+1; d.disabled=true;
+      calendarDays.appendChild(d);
+    }
+
+    for(let day=1;day<=daysInMonth;day++){
+      const d=document.createElement('button');
+      d.type='button';
+      const date=new Date(year,month,day);
+      date.setHours(0,0,0,0);
+      d.className='calendar-day';
+      d.textContent=day;
+
+      if(date.getTime()===today.getTime()) d.classList.add('today');
+      if(chosenDate && date.getTime()===chosenDate.getTime()) d.classList.add('selected');
+      if(date<today) d.disabled=true;
+
+      d.addEventListener('click',()=>{
+        chosenDate=date;
+        selectedDateLabel.textContent=formatDate(date);
+        renderCalendar();
+        updateValue();
+      });
+      calendarDays.appendChild(d);
+    }
+
+    const totalCells=firstDay+daysInMonth;
+    const trailing=(7-totalCells%7)%7;
+    for(let i=1;i<=trailing;i++){
+      const d=document.createElement('button');
+      d.type='button'; d.className='calendar-day muted';
+      d.textContent=i; d.disabled=true;
+      calendarDays.appendChild(d);
+    }
+  }
+
+  function updateValue(){
+    if(chosenDate && chosenTime){
+      const y=chosenDate.getFullYear();
+      const m=String(chosenDate.getMonth()+1).padStart(2,'0');
+      const d=String(chosenDate.getDate()).padStart(2,'0');
+      bookDate.value=`${y}-${m}-${d}T${chosenTime}`;
+      selectedTimeLabel.textContent = new Date(`1970-01-01T${chosenTime}`).toLocaleTimeString([],{
+        hour:'numeric',minute:'2-digit'
+      });
+    }else{
+      bookDate.value='';
+      if(!chosenDate) selectedDateLabel.textContent='Select a day';
+      if(!chosenTime) selectedTimeLabel.textContent='Select a time';
+    }
+  }
+
+  customTime.addEventListener('change',()=>{
+    chosenTime=customTime.value;
+    renderTimes();
+    updateValue();
+  });
+
+  $('#prevMonth')?.addEventListener('click',()=>{
+    const candidate=new Date(viewDate.getFullYear(),viewDate.getMonth()-1,1);
+    const currentMonth=new Date(today.getFullYear(),today.getMonth(),1);
+    if(candidate>=currentMonth){viewDate=candidate;renderCalendar();}
+  });
+
+  $('#nextMonth')?.addEventListener('click',()=>{
+    viewDate=new Date(viewDate.getFullYear(),viewDate.getMonth()+1,1);
+    renderCalendar();
+  });
+
+  window.__resetAppointmentPicker=function(){
+    chosenDate=null;
+    chosenTime='';
+    viewDate=new Date(today.getFullYear(),today.getMonth(),1);
+    customTime.value='';
+    selectedDateLabel.textContent='Select a day';
+    selectedTimeLabel.textContent='Select a time';
+    bookDate.value='';
+    renderCalendar();
+    renderTimes();
+  };
+
+  renderCalendar();
+  renderTimes();
+})();
+
+
+/* ===== INTERACTIVE BOOK / TECH CHECK-IN ===== */
+(function(){
+  const form = $('#bookingForm');
+  if(!form) return;
+
+  const steps = $$('.book-step', form);
+  const progress = $$('#bookProgress span');
+  const next = $('#bookNext');
+  const back = $('#bookBack');
+  const confirm = $('#bookingConfirm');
+  const summary = {
+    issue: $('#sumIssue'),
+    symptoms: $('#sumSymptoms'),
+    urgency: $('#sumUrgency')
+  };
+
+  let current = 1;
+  let selectedIssue = '';
+  let selectedSymptoms = [];
+  let selectedExtras = [];
+  let selectedUrgency = '';
+
+  function updateSummary(){
+    summary.issue.textContent = selectedIssue || 'Not selected';
+    summary.symptoms.textContent = selectedSymptoms.length
+      ? [...selectedSymptoms,...selectedExtras].join(' • ')
+      : 'Not selected';
+    summary.urgency.textContent = selectedUrgency || 'Not selected';
+  }
+
+  function setStep(step){
+    current = step;
+    steps.forEach(s=>s.classList.toggle('active',Number(s.dataset.step)===step));
+    progress.forEach((p,i)=>p.classList.toggle('active',i < Math.min(step,3)));
+    back.disabled = step===1;
+    next.textContent = step===4 ? 'Submit Request →' : 'Continue →';
+    updateSummary();
+  }
+
+  $$('#issueChoices .issue-bubble').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $$('#issueChoices .issue-bubble').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedIssue = btn.dataset.issue;
+      updateSummary();
+    });
+  });
+
+  $$('#symptomChoices .issue-bubble').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btn.classList.toggle('selected');
+      selectedSymptoms = $$('#symptomChoices .issue-bubble.selected').map(b=>b.dataset.symptom);
+      updateSummary();
+    });
+  });
+
+  $$('.quick-pill').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btn.classList.toggle('selected');
+      const value=btn.dataset.extra;
+      if(btn.classList.contains('selected')) selectedExtras.push(value);
+      else selectedExtras=selectedExtras.filter(x=>x!==value);
+      updateSummary();
+    });
+  });
+
+  $$('#urgencyChoices .issue-bubble').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $$('#urgencyChoices .issue-bubble').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedUrgency=btn.dataset.urgency;
+      updateSummary();
+    });
+  });
+
+  function validateStep(){
+    if(current===1 && !selectedIssue){
+      showToast('Pick the issue that sounds closest to your problem.');
+      return false;
+    }
+    if(current===2 && selectedSymptoms.length===0){
+      showToast('Pick at least one symptom so the technician knows where to start.');
+      return false;
+    }
+    if(current===3 && !selectedUrgency){
+      showToast('Choose an urgency level.');
+      return false;
+    }
+    if(current===4){
+      if(!bookDate.value){
+        showToast('Choose an appointment date and time.');
+        return false;
+      }
+      if(!form.reportValidity()) return false;
+    }
+    return true;
+  }
+
+  next.addEventListener('click',()=>{
+    if(!validateStep()) return;
+
+    if(current<4){
+      setStep(current+1);
+      return;
+    }
+
+    const name=$('#bookName').value.trim();
+    confirm.classList.add('show');
+    form.style.display='none';
+    $('#confirmationText').textContent =
+      `Thanks, ${name}. Your ${selectedIssue.toLowerCase()} request is ready for the next scheduling step.`;
+    showToast('Service request prepared successfully.');
+  });
+
+  back.addEventListener('click',()=>{
+    if(current>1) setStep(current-1);
+  });
+
+  $('#bookAgain')?.addEventListener('click',()=>{
+    selectedIssue='';
+    selectedSymptoms=[];
+    selectedExtras=[];
+    selectedUrgency='';
+    $$('.issue-bubble.selected').forEach(b=>b.classList.remove('selected'));
+    $$('.quick-pill.selected').forEach(b=>b.classList.remove('selected'));
+    form.reset();
+    window.__resetAppointmentPicker?.();
+    form.style.display='grid';
+    confirm.classList.remove('show');
+    setStep(1);
+  });
+
+  updateSummary();
+})();
+
+/* ===== SMALL TECH TOUCHES ===== */
+$('#year').textContent=new Date().getFullYear();
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    sidebar.classList.remove('open');
+    if(menuBtn) menuBtn.textContent='☰';
+  }
+});
+
+/* ===== JSON-LD / STRUCTURED DATA ===== */
+const schema = {
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"WeLoveTechnology",
+  "description":"Website development, computer repair, software support and technology services.",
+  "url":"https://vertextechworks.example",
+  "email":"tolgatnt@gmail.com",
+  "telephone":"+1-818-960-8689",
+  "serviceType":[
+    "Website Design","Web Development","Computer Repair",
+    "Software Support","Network Support","Technology Consulting"
+  ]
+};
+const script=document.createElement('script');
+script.type='application/ld+json';
+script.textContent=JSON.stringify(schema);
+document.head.appendChild(script);
+
+
+
+
+</script>
+</body>
+</html>
